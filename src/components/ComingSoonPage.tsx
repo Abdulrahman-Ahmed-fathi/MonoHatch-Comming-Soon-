@@ -9,13 +9,13 @@ const ComingSoonPage = () => {
   return (
     <div className="min-h-screen bg-white flex flex-col relative overflow-hidden">
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
         <div className="absolute -top-4 -left-4 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute top-1/2 -right-4 w-96 h-96 bg-primary-glow/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       {/* Header with uploaded logo and Mono Hatch text */}
-      <header className="relative z-10 p-6 md:p-8">
+      <header className="relative z-20 p-6 md:p-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className="w-16 h-16 md:w-12 md:h-12 flex items-center justify-center bg-primary/10 rounded-full">
