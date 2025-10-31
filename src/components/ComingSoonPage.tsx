@@ -1,5 +1,5 @@
 import { Facebook, Instagram } from "lucide-react";
-import { SiX, SiTiktok } from "react-icons/si";
+import { SiLinkedin, SiTiktok } from "react-icons/si";
 import PartnershipSection from "./PartnershipSection";
 import TeamSection from "./TeamSection";
 
@@ -47,14 +47,14 @@ const ComingSoonPage = () => {
             >
               <Instagram className="w-5 h-5 text-primary" />
             </a>
-            <a 
-              href="https://x.com/HatchMono58912?t=lqzKxPc_0T6JnJB-si21Dw&s=09" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-10 h-10 bg-primary/10 hover:bg-primary/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-            >
-              <SiX className="w-5 h-5 text-primary" />
-            </a>
+			<a 
+				href="https://www.linkedin.com/company/mono-hatch/" 
+				target="_blank" 
+				rel="noopener noreferrer"
+				className="w-10 h-10 bg-primary/10 hover:bg-primary/20 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+			>
+				<SiLinkedin className="w-5 h-5 text-primary" />
+			</a>
             <a 
               href="https://www.tiktok.com/@mono.hatch?_t=ZS-8xmAgFQkL3Z&_r=1" 
               target="_blank" 
