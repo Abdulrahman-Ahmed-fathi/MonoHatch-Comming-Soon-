@@ -1,5 +1,6 @@
 import { Facebook, Instagram } from "lucide-react";
 import { SiLinkedin, SiTiktok } from "react-icons/si";
+import CollaborationSection from "./CollaborationSection";
 import PartnershipSection from "./PartnershipSection";
 import TeamSection from "./TeamSection";
 
@@ -110,6 +111,9 @@ const ComingSoonPage = () => {
           </div>
         </div>
       </main>
+
+      {/* Collaboration Section */}
+      <CollaborationSection />
 
       {/* Partnership Section */}
       <PartnershipSection />

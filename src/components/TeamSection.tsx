@@ -48,6 +48,12 @@ const teamMembers: TeamMember[] = [
     linkedinUrl: "https://www.linkedin.com/in/amira-heider-868314275?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
   },
   {
+    name: "Sara Soliman",
+    role: "Flutter Developer",
+    photoUrl: "uploads/Sara.jpeg",
+    linkedinUrl: "https://www.linkedin.com/in/sara-soliman233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+  },
+  {
     name: "Mirna Tarek",
     role: "Flutter Developer",
     photoUrl: "uploads/Merna.jpg",
