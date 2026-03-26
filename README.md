@@ -53,19 +53,4 @@ A modern, elegant coming soon page for Mono Hatch featuring strategic partnershi
    npm run build
    ```
 
-## 📁 Project Structure
-
-
-- **Mobile**: < 768px
-- **Tablet**: 768px - 1024px
-- **Desktop**: 1024px - 1280px
-- **Large Desktop**: > 1280px
-
-## 🚀 Deployment
-
-The project can be deployed to any static hosting service:
-- Vercel
-- Netlify
-- GitHub Pages
-- AWS S3 + CloudFront
 
