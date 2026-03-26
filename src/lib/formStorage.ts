@@ -1,4 +1,4 @@
-import { ensureSupabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabaseClient";
 
 export interface FreeTrialEntry {
   fullName: string;
@@ -45,7 +45,6 @@ const insertSubmission = async (
   payload: Record<string, unknown>,
   submittedAt: string,
 ) => {
-  const supabase = ensureSupabase();
   const { error } = await supabase.from(TABLE_NAME).insert({
     form_type: formType,
     payload,
@@ -58,7 +57,6 @@ const insertSubmission = async (
 };
 
 const getSubmissions = async (formType: FormType) => {
-  const supabase = ensureSupabase();
   const { data, error } = await supabase
     .from(TABLE_NAME)
     .select("payload, submitted_at")
