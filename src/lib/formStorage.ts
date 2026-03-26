@@ -1,3 +1,5 @@
+import { supabase } from "@/lib/supabaseClient";
+
 export interface FreeTrialEntry {
   fullName: string;
   email: string;
@@ -29,58 +31,144 @@ export interface StayTunedEntry {
   submittedAt: string;
 }
 
-const FREE_TRIAL_KEY = "mono-hatch-free-trial-entries";
-const PARTNER_KEY = "mono-hatch-partner-entries";
-const WORKSHOP_KEY = "mono-hatch-workshop-entries";
-const STAY_TUNED_KEY = "mono-hatch-stay-tuned-entries";
+type FormType = "free_trial" | "partner" | "workshop" | "stay_tuned";
 
-const readEntries = <T,>(key: string): T[] => {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(key);
-    if (!raw) return [];
-    return JSON.parse(raw) as T[];
-  } catch {
-    return [];
+type SubmissionRow = {
+  payload: Record<string, unknown> | null;
+  submitted_at: string;
+};
+
+const TABLE_NAME = "form_submissions";
+
+const insertSubmission = async (
+  formType: FormType,
+  payload: Record<string, unknown>,
+  submittedAt: string,
+) => {
+  const { error } = await supabase.from(TABLE_NAME).insert({
+    form_type: formType,
+    payload,
+    submitted_at: submittedAt,
+  });
+
+  if (error) {
+    throw new Error(error.message);
   }
 };
 
-const writeEntries = <T,>(key: string, entries: T[]) => {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(key, JSON.stringify(entries));
+const getSubmissions = async (formType: FormType) => {
+  const { data, error } = await supabase
+    .from(TABLE_NAME)
+    .select("payload, submitted_at")
+    .eq("form_type", formType)
+    .order("submitted_at", { ascending: false });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data ?? []) as SubmissionRow[];
 };
 
-export const saveFreeTrialEntry = (entry: FreeTrialEntry) => {
-  const entries = readEntries<FreeTrialEntry>(FREE_TRIAL_KEY);
-  writeEntries(FREE_TRIAL_KEY, [entry, ...entries]);
+const asString = (value: unknown) => (typeof value === "string" ? value : "");
+
+const asStringArray = (value: unknown) =>
+  Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
+
+export const saveFreeTrialEntry = async (entry: FreeTrialEntry) => {
+  await insertSubmission(
+    "free_trial",
+    {
+      fullName: entry.fullName,
+      email: entry.email,
+      phone: entry.phone,
+    },
+    entry.submittedAt,
+  );
 };
 
-export const getFreeTrialEntries = () => readEntries<FreeTrialEntry>(FREE_TRIAL_KEY);
+export const getFreeTrialEntries = async (): Promise<FreeTrialEntry[]> => {
+  const rows = await getSubmissions("free_trial");
 
-export const savePartnerEntry = (entry: PartnerEntry) => {
-  const entries = readEntries<PartnerEntry>(PARTNER_KEY);
-  writeEntries(PARTNER_KEY, [entry, ...entries]);
+  return rows.map(({ payload, submitted_at }) => ({
+    fullName: asString(payload?.fullName),
+    email: asString(payload?.email),
+    phone: asString(payload?.phone),
+    submittedAt: submitted_at,
+  }));
 };
 
-export const getPartnerEntries = () => readEntries<PartnerEntry>(PARTNER_KEY);
-
-export const saveWorkshopEntry = (entry: WorkshopEntry) => {
-  const entries = readEntries<WorkshopEntry>(WORKSHOP_KEY);
-  writeEntries(WORKSHOP_KEY, [entry, ...entries]);
+export const savePartnerEntry = async (entry: PartnerEntry) => {
+  await insertSubmission(
+    "partner",
+    {
+      fullName: entry.fullName,
+      organization: entry.organization,
+      role: entry.role,
+      email: entry.email,
+      phone: entry.phone,
+      specialization: entry.specialization,
+      experience: entry.experience,
+      website: entry.website,
+      brief: entry.brief,
+      collaborationTypes: entry.collaborationTypes,
+    },
+    entry.submittedAt,
+  );
 };
 
-export const getWorkshopEntries = () => readEntries<WorkshopEntry>(WORKSHOP_KEY);
+export const getPartnerEntries = async (): Promise<PartnerEntry[]> => {
+  const rows = await getSubmissions("partner");
 
-export const saveStayTunedEntry = (entry: StayTunedEntry) => {
-  const entries = readEntries<StayTunedEntry>(STAY_TUNED_KEY);
-  writeEntries(STAY_TUNED_KEY, [entry, ...entries]);
+  return rows.map(({ payload, submitted_at }) => ({
+    fullName: asString(payload?.fullName),
+    organization: asString(payload?.organization),
+    role: asString(payload?.role),
+    email: asString(payload?.email),
+    phone: asString(payload?.phone),
+    specialization: asString(payload?.specialization),
+    experience: asString(payload?.experience),
+    website: asString(payload?.website),
+    brief: asString(payload?.brief),
+    collaborationTypes: asStringArray(payload?.collaborationTypes),
+    submittedAt: submitted_at,
+  }));
 };
 
-export const getStayTunedEntries = () => readEntries<StayTunedEntry>(STAY_TUNED_KEY);
+export const saveWorkshopEntry = async (entry: WorkshopEntry) => {
+  await insertSubmission(
+    "workshop",
+    {
+      email: entry.email,
+    },
+    entry.submittedAt,
+  );
+};
 
-export const clearAllDashboardData = () => {
-  localStorage.removeItem(FREE_TRIAL_KEY);
-  localStorage.removeItem(PARTNER_KEY);
-  localStorage.removeItem(WORKSHOP_KEY);
-  localStorage.removeItem(STAY_TUNED_KEY);
+export const getWorkshopEntries = async (): Promise<WorkshopEntry[]> => {
+  const rows = await getSubmissions("workshop");
+
+  return rows.map(({ payload, submitted_at }) => ({
+    email: asString(payload?.email),
+    submittedAt: submitted_at,
+  }));
+};
+
+export const saveStayTunedEntry = async (entry: StayTunedEntry) => {
+  await insertSubmission(
+    "stay_tuned",
+    {
+      email: entry.email,
+    },
+    entry.submittedAt,
+  );
+};
+
+export const getStayTunedEntries = async (): Promise<StayTunedEntry[]> => {
+  const rows = await getSubmissions("stay_tuned");
+
+  return rows.map(({ payload, submitted_at }) => ({
+    email: asString(payload?.email),
+    submittedAt: submitted_at,
+  }));
 };
