@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { saveFreeTrialEntry } from "@/lib/formStorage";
 
 const bullets = [
   "- Early access to the app",
@@ -7,7 +8,7 @@ const bullets = [
   "- Help shape the future of women&apos;s health",
 ];
 
-type SubmitStatus = "idle" | "loading" | "success";
+type SubmitStatus = "idle" | "loading" | "success" | "error";
 
 export default function FreeTrialSection() {
   const reduceMotion = useReducedMotion();
@@ -17,22 +18,25 @@ export default function FreeTrialSection() {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (status === "loading" || status === "success") return;
 
     setStatus("loading");
-    window.setTimeout(() => {
-      setStatus("success");
-      import("@/lib/formStorage").then(({ saveFreeTrialEntry }) => {
-        saveFreeTrialEntry({
-          fullName: name,
-          email,
-          phone,
-          submittedAt: new Date().toISOString(),
-        });
+    try {
+      await saveFreeTrialEntry({
+        fullName: name,
+        email,
+        phone,
+        submittedAt: new Date().toISOString(),
       });
-    }, 1100);
+      setStatus("success");
+      setName("");
+      setEmail("");
+      setPhone("");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -98,6 +102,10 @@ export default function FreeTrialSection() {
               {status === "success" ? (
                 <div className="mt-5 rounded-xl border border-french-rose/25 bg-french-rose/10 px-4 py-3 text-sm font-medium text-french-rose">
                   You are in! Thanks for joining the waitlist.
+                </div>
+              ) : status === "error" ? (
+                <div className="mt-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">
+                  We could not save your details right now. Please try again.
                 </div>
               ) : (
                 <form className="mt-5 space-y-3" onSubmit={handleSubmit}>

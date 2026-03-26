@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  clearAllDashboardData,
   getFreeTrialEntries,
   getPartnerEntries,
   getWorkshopEntries,
@@ -18,26 +17,39 @@ export default function Dashboard() {
   const [partnerEntries, setPartnerEntries] = useState<PartnerEntry[]>([]);
   const [workshopEntries, setWorkshopEntries] = useState<WorkshopEntry[]>([]);
   const [stayTunedEntries, setStayTunedEntries] = useState<StayTunedEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
-  const loadData = () => {
-    setFreeTrialEntries(getFreeTrialEntries());
-    setPartnerEntries(getPartnerEntries());
-    setWorkshopEntries(getWorkshopEntries());
-    setStayTunedEntries(getStayTunedEntries());
+  const loadData = async () => {
+    setIsLoading(true);
+    setLoadError("");
+
+    try {
+      const [freeTrials, partners, workshops, stayTuned] = await Promise.all([
+        getFreeTrialEntries(),
+        getPartnerEntries(),
+        getWorkshopEntries(),
+        getStayTunedEntries(),
+      ]);
+
+      setFreeTrialEntries(freeTrials);
+      setPartnerEntries(partners);
+      setWorkshopEntries(workshops);
+      setStayTunedEntries(stayTuned);
+    } catch {
+      setLoadError("We could not load dashboard data from Supabase.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    loadData();
+    void loadData();
   }, []);
 
   const signOut = () => {
     localStorage.removeItem("mono-hatch-authenticated");
     navigate("/login", { replace: true });
-  };
-
-  const clearAll = () => {
-    clearAllDashboardData();
-    loadData();
   };
 
   return (
@@ -46,14 +58,14 @@ export default function Dashboard() {
         <div className="flex flex-col gap-3 rounded-2xl border border-[#f3e9ea] bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-bold text-french-rose">Mono Hatch Admin Dashboard</h1>
-            <p className="text-sm text-ink-warm/70">Review captured form entries for free trial, partner collaboration, and workshop notifications.</p>
+            <p className="text-sm text-ink-warm/70">Review Supabase form entries for free trial, partner collaboration, workshop notifications, and subscribers.</p>
           </div>
           <div className="flex gap-2">
             <button
-              onClick={clearAll}
+              onClick={() => void loadData()}
               className="rounded-lg border border-rose-300 bg-rose-50 px-4 py-2 text-sm text-rose-700 hover:bg-rose-100"
             >
-              Clear all entries
+              Refresh data
             </button>
             <button
               onClick={signOut}
@@ -63,6 +75,18 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
+
+        {isLoading ? (
+          <section className="rounded-2xl border border-[#f3e9ea] bg-white p-5 text-sm text-ink-warm/70 shadow-sm">
+            Loading submissions from Supabase...
+          </section>
+        ) : null}
+
+        {loadError ? (
+          <section className="rounded-2xl border border-rose-200 bg-rose-50 p-5 text-sm text-rose-700 shadow-sm">
+            {loadError}
+          </section>
+        ) : null}
 
         <section className="rounded-2xl border border-[#f3e9ea] bg-white p-5 shadow-sm">
           <h2 className="mb-3 text-lg font-semibold text-ink-warm">Start Your Free Trial</h2>

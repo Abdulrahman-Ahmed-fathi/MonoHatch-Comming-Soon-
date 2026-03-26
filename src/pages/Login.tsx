@@ -17,7 +17,7 @@ export default function Login() {
       navigate("/dashboard", { replace: true });
       return;
     }
-    setError("Invalid credentials. Please use username: admin, password: mono123");
+    setError("invalid username or password");
   };
 
   return (
@@ -34,7 +34,7 @@ export default function Login() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            placeholder="admin"
+            placeholder=""
             className="w-full rounded-xl border border-[#e8dfe4] px-4 py-2 text-sm outline-none focus:border-french-rose/60 focus:ring-2 focus:ring-french-rose/20"
           />
 
@@ -44,7 +44,7 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="mono123"
+            placeholder="*****"
             className="w-full rounded-xl border border-[#e8dfe4] px-4 py-2 text-sm outline-none focus:border-french-rose/60 focus:ring-2 focus:ring-french-rose/20"
           />
 

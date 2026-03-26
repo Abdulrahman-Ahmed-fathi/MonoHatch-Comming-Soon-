@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { savePartnerEntry } from "@/lib/formStorage";
 import {
   Dialog,
   DialogTrigger,
@@ -46,6 +47,8 @@ export default function PartnerWithUsSection() {
 
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     fullName: "",
     organization: "",
@@ -75,26 +78,34 @@ export default function PartnerWithUsSection() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!form.fullName.trim() || !form.email.trim() || !form.phone.trim()) {
+    if (!form.fullName.trim() || !form.email.trim() || !form.phone.trim() || isSubmitting) {
       return;
     }
 
-    setSubmitted(true);
+    setSubmitError("");
+    setIsSubmitting(true);
 
-    import("@/lib/formStorage").then(({ savePartnerEntry }) => {
-      savePartnerEntry({
+    try {
+      await savePartnerEntry({
         ...form,
         submittedAt: new Date().toISOString(),
       });
-    });
+      setSubmitted(true);
+    } catch {
+      setSubmitError("We could not submit your request right now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleOpenChange = (value: boolean) => {
     if (!value) {
       setSubmitted(false);
+      setSubmitError("");
+      setIsSubmitting(false);
       setForm({
         fullName: "",
         organization: "",
@@ -269,6 +280,8 @@ export default function PartnerWithUsSection() {
                       />
                     </label>
 
+                    {submitError ? <p className="text-sm text-rose-600">{submitError}</p> : null}
+
                     <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end sm:gap-3">
                       <DialogClose asChild>
                         <button type="button" className="w-full sm:w-auto rounded-xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-rose-400">
@@ -277,9 +290,10 @@ export default function PartnerWithUsSection() {
                       </DialogClose>
                       <button
                         type="submit"
+                        disabled={isSubmitting}
                         className="w-full sm:w-auto rounded-xl bg-french-rose px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2"
                       >
-                        Submit Request
+                        {isSubmitting ? "Submitting..." : "Submit Request"}
                       </button>
                     </div>
                   </form>

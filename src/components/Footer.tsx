@@ -11,19 +11,28 @@ export default function Footer() {
 
   const [subscribeEmail, setSubscribeEmail] = useState("");
   const [subscribeStatus, setSubscribeStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubscribe = () => {
-    if (!subscribeEmail.trim()) {
+  const handleSubscribe = async () => {
+    if (!subscribeEmail.trim() || isSubmitting) {
       setSubscribeStatus("Please enter a valid email address.");
       return;
     }
 
-    saveStayTunedEntry({
-      email: subscribeEmail.trim(),
-      submittedAt: new Date().toISOString(),
-    });
-    setSubscribeStatus("Thanks! You are subscribed.");
-    setSubscribeEmail("");
+    setIsSubmitting(true);
+
+    try {
+      await saveStayTunedEntry({
+        email: subscribeEmail.trim(),
+        submittedAt: new Date().toISOString(),
+      });
+      setSubscribeStatus("Thanks! You are subscribed.");
+      setSubscribeEmail("");
+    } catch {
+      setSubscribeStatus("We could not save your email right now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
 
     setTimeout(() => setSubscribeStatus(""), 3000);
   };
@@ -117,9 +126,10 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={handleSubscribe}
+                disabled={isSubmitting}
                 className="rounded-full bg-french-rose px-5 py-2 text-sm font-semibold text-white hover:bg-[#ff5688] transition"
               >
-                Subscribe
+                {isSubmitting ? "Saving..." : "Subscribe"}
               </button>
             </div>
             {subscribeStatus ? (

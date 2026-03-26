@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { saveWorkshopEntry } from "@/lib/formStorage";
 
 const bullets = [
   "Build confidence and self-esteem",
@@ -15,18 +16,28 @@ export default function WorkshopSection() {
   const initial = reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.98 };
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  function handleNotify(event: FormEvent<HTMLFormElement>) {
+  async function handleNotify(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!email.trim()) return;
-    setSent(true);
+    if (!email.trim() || isSubmitting) return;
 
-    import("@/lib/formStorage").then(({ saveWorkshopEntry }) => {
-      saveWorkshopEntry({
+    setSubmitError("");
+    setIsSubmitting(true);
+
+    try {
+      await saveWorkshopEntry({
         email,
         submittedAt: new Date().toISOString(),
       });
-    });
+      setSent(true);
+      setEmail("");
+    } catch {
+      setSubmitError("We could not save your email right now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -87,14 +98,16 @@ export default function WorkshopSection() {
             />
             <button
               type="submit"
+              disabled={isSubmitting}
               className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-french-rose px-8 py-3 font-semibold text-white shadow-pink transition-all hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2"
             >
-              Notify Me
+              {isSubmitting ? "Saving..." : "Notify Me"}
             </button>
           </motion.form>
           {sent ? (
             <p className="p2-r mt-3 text-french-rose">Thanks! We will notify you soon.</p>
           ) : null}
+          {submitError ? <p className="p2-r mt-3 text-rose-600">{submitError}</p> : null}
         </motion.div>
       </div>
     </section>
