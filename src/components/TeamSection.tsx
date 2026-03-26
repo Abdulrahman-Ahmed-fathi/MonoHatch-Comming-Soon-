@@ -61,7 +61,7 @@ const teamMembers = [
     name: "Mazen Mohamed",
     role: "UI/UX Designer",
     image: "/uploads/mazen.jpg",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/mazen-mohammeed/",
   },
 ];
 
