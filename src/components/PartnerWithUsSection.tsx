@@ -146,24 +146,24 @@ export default function PartnerWithUsSection() {
                 Collaborate With Us
               </button>
             </DialogTrigger>
-            <DialogContent className="bg-white p-6 md:p-8 rounded-3xl w-[min(100vw-2rem,40rem)]">
+            <DialogContent className="bg-white p-4 md:p-6 lg:p-8 rounded-3xl w-[min(100vw-1rem,48rem)] max-h-[90vh] overflow-y-auto">
               {!submitted ? (
                 <>
-                  <DialogHeader>
-                    <DialogTitle>Partner Collaboration Request</DialogTitle>
-                    <DialogDescription>
-                      Please fill in your details and we’ll get back to you within 24-48 hours.
+                  <DialogHeader className="text-center md:text-left">
+                    <DialogTitle className="text-lg md:text-xl">Partner Collaboration Request</DialogTitle>
+                    <DialogDescription className="text-sm md:text-base">
+                      Please fill in your details and we&apos;ll get back to you within 24-48 hours.
                     </DialogDescription>
                   </DialogHeader>
-                  <form onSubmit={handleSubmit} className="mt-5 space-y-4">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <form onSubmit={handleSubmit} className="mt-4 md:mt-6 space-y-4 md:space-y-5">
+                    <div className="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
                       <label className="space-y-1 text-sm">
                         <span className="font-medium">Full Name</span>
                         <input
                           value={form.fullName}
                           onChange={(e) => handleInputChange("fullName", e.target.value)}
                           required
-                          className="w-full rounded-xl border border-rose-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+                          className="w-full rounded-xl border border-rose-200 px-3 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-rose-400"
                         />
                       </label>
                       <label className="space-y-1 text-sm">
@@ -171,18 +171,18 @@ export default function PartnerWithUsSection() {
                         <input
                           value={form.organization}
                           onChange={(e) => handleInputChange("organization", e.target.value)}
-                          className="w-full rounded-xl border border-rose-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+                          className="w-full rounded-xl border border-rose-200 px-3 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-rose-400"
                         />
                       </label>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
                       <label className="space-y-1 text-sm">
                         <span className="font-medium">Role / Title</span>
                         <input
                           value={form.role}
                           onChange={(e) => handleInputChange("role", e.target.value)}
-                          className="w-full rounded-xl border border-rose-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+                          className="w-full rounded-xl border border-rose-200 px-3 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-rose-400"
                         />
                       </label>
                       <label className="space-y-1 text-sm">
@@ -192,12 +192,12 @@ export default function PartnerWithUsSection() {
                           value={form.email}
                           onChange={(e) => handleInputChange("email", e.target.value)}
                           required
-                          className="w-full rounded-xl border border-rose-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+                          className="w-full rounded-xl border border-rose-200 px-3 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-rose-400"
                         />
                       </label>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
                       <label className="space-y-1 text-sm">
                         <span className="font-medium">Phone Number</span>
                         <input
@@ -218,14 +218,14 @@ export default function PartnerWithUsSection() {
                       </label>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
                       <label className="space-y-1 text-sm">
                         <span className="font-medium">Years of Experience</span>
                         <input
                           type="text"
                           value={form.experience}
                           onChange={(e) => handleInputChange("experience", e.target.value)}
-                          className="w-full rounded-xl border border-rose-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+                          className="w-full rounded-xl border border-rose-200 px-3 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-rose-400"
                         />
                       </label>
                       <label className="space-y-1 text-sm">
@@ -234,23 +234,23 @@ export default function PartnerWithUsSection() {
                           type="url"
                           value={form.website}
                           onChange={(e) => handleInputChange("website", e.target.value)}
-                          className="w-full rounded-xl border border-rose-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+                          className="w-full rounded-xl border border-rose-200 px-3 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-rose-400"
                         />
                       </label>
                     </div>
 
-                    <fieldset className="space-y-2">
+                    <fieldset className="space-y-3">
                       <legend className="text-sm font-medium">Type of Collaboration</legend>
                       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                         {collaborationOptions.map((option) => (
-                          <label key={option} className="flex items-center gap-2 text-sm">
+                          <label key={option} className="flex items-center gap-2 text-sm cursor-pointer">
                             <input
                               type="checkbox"
                               checked={form.collaborationTypes.includes(option)}
                               onChange={() => handleCheckbox(option)}
                               className="h-4 w-4 rounded border-rose-300 text-french-rose focus:ring-french-rose"
                             />
-                            {option}
+                            <span className="text-sm md:text-base">{option}</span>
                           </label>
                         ))}
                       </div>
@@ -262,36 +262,37 @@ export default function PartnerWithUsSection() {
                         value={form.brief}
                         onChange={(e) => handleInputChange("brief", e.target.value)}
                         rows={4}
-                        className="w-full rounded-xl border border-rose-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-400"
+                        placeholder="Tell us about your collaboration ideas..."
+                        className="w-full rounded-xl border border-rose-200 px-3 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-rose-400 resize-none"
                       />
                     </label>
 
-                    <div className="mt-4 flex justify-end gap-3">
+                    <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end sm:gap-3">
                       <DialogClose asChild>
-                        <button type="button" className="rounded-xl border border-rose-200 bg-white px-4 py-2 text-sm transition hover:bg-rose-50">
+                        <button type="button" className="w-full sm:w-auto rounded-xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-rose-400">
                           Cancel
                         </button>
                       </DialogClose>
                       <button
                         type="submit"
-                        className="rounded-xl bg-french-rose px-5 py-2 text-sm font-semibold text-white transition hover:bg-french-rose-shade1"
+                        className="w-full sm:w-auto rounded-xl bg-french-rose px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2"
                       >
-                        Submit
+                        Submit Request
                       </button>
                     </div>
                   </form>
                 </>
               ) : (
-                <div className="text-center py-6">
-                  <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-french-rose/10 text-french-rose">
-                    <CheckCircle2 className="h-10 w-10" />
+                <div className="text-center py-6 md:py-8">
+                  <div className="mx-auto mb-4 flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-french-rose/10 text-french-rose">
+                    <CheckCircle2 className="h-8 w-8 md:h-10 md:w-10" />
                   </div>
-                  <h3 className="text-xl font-semibold text-ink-warm">Thank you for your interest!</h3>
-                  <p className="mt-2 text-sm text-ink-warm/75">
+                  <h3 className="text-lg md:text-xl font-semibold text-ink-warm">Thank you for your interest!</h3>
+                  <p className="mt-2 text-sm md:text-base text-ink-warm/75 px-4">
                     Your collaboration request has been received. Our team will review your information and contact you soon.
                   </p>
-                  <div className="mt-5">
-                    <DialogClose className="rounded-xl bg-french-rose px-5 py-2 text-sm font-semibold text-white transition hover:bg-french-rose-shade1">
+                  <div className="mt-6">
+                    <DialogClose className="w-full sm:w-auto rounded-xl bg-french-rose px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2">
                       Close
                     </DialogClose>
                   </div>
