@@ -1,56 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Coming Soon Landing Page Design System - Rose/Pink Theme
-All colors MUST be HSL. Creating an elegant, modern aesthetic with rose/pink tones.
-*/
-
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   :root {
-    /* Rose/Pink theme for coming soon page */
-    --background: 350 100% 98%;
-    --foreground: 345 15% 15%;
+    --font-display: "Inter", sans-serif;
+    --font-body: "DM Sans", sans-serif;
+    --color-primary: #f60046;
+    --color-primary-dark: #d93d68;
+    --color-warm-white: #f6f2ef;
+    --color-pale-gray: #e6e1dc;
+    --color-deep-slate: #1f1e26;
+    --color-near-black: #0f0f12;
+    --gradient-primary: linear-gradient(135deg, #f4497a 0%, #a94d8f 100%);
+    --gradient-section-soft: radial-gradient(circle at 0% 0%, #fcedf5 0%, #f8f2ef 32%, #f6f0f3 100%);
+    --gradient-footer-pastel: linear-gradient(180deg, #ffffff 0%, #f9f0f4 55%, #f5eef7 100%);
+    --shadow-pink: 0 14px 42px rgba(244, 73, 122, 0.22);
+    --shadow-card: 0 18px 44px rgba(27, 27, 35, 0.11);
+    --shadow-shell: 0 24px 50px rgba(179, 80, 150, 0.12);
 
-    --card: 350 100% 98%;
-    --card-foreground: 345 15% 15%;
+    --background: 28 30% 98%;
+    --foreground: 248 15% 16%;
 
-    --popover: 350 100% 98%;
-    --popover-foreground: 345 15% 15%;
+    --card: 40 20% 98%;
+    --card-foreground: 230 18% 18%;
 
-    /* Rose/Pink gradient theme */
-    --primary: 330 81% 60%;
+    --popover: 40 20% 98%;
+    --popover-foreground: 230 18% 18%;
+
+    --primary: 343 89% 61%;
     --primary-foreground: 0 0% 98%;
-    --primary-glow: 340 82% 67%;
+    --primary-glow: 343 89% 61%;
 
-    --secondary: 350 20% 96%;
-    --secondary-foreground: 345 15% 15%;
+    --secondary: 40 12% 94%;
+    --secondary-foreground: 230 18% 18%;
 
-    --muted: 350 20% 96%;
-    --muted-foreground: 345 15% 65%;
+    --muted: 30 16% 95%;
+    --muted-foreground: 245 8% 44%;
 
-    --accent: 330 81% 60%;
+    --accent: 343 89% 61%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 350 20% 90%;
-    --input: 350 20% 90%;
-    --ring: 330 81% 60%;
+    --border: 30 14% 89%;
+    --input: 30 14% 89%;
+    --ring: 343 89% 61%;
 
     --radius: 0.75rem;
 
-    /* Custom design tokens for coming soon page */
-    --gradient-primary: linear-gradient(135deg, hsl(330 81% 60%), hsl(340 82% 67%));
-    --gradient-background: linear-gradient(135deg, hsl(350 100% 98%), hsl(340 50% 95%));
-    --shadow-glow: 0 0 40px hsl(330 81% 60% / 0.3);
-    --shadow-elegant: 0 10px 30px -10px hsl(330 81% 60% / 0.2);
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --gradient-background: linear-gradient(180deg, #fdf8f7 0%, #ffffff 100%);
+    --shadow-glow: 0 0 36px hsl(343 89% 61% / 0.2);
+    --shadow-elegant: 0 14px 30px -12px hsl(343 89% 61% / 0.18);
+    --transition-smooth: all 0.24s ease;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -63,33 +68,33 @@ All colors MUST be HSL. Creating an elegant, modern aesthetic with rose/pink ton
   }
 
   .dark {
-    --background: 345 30% 8%;
-    --foreground: 350 100% 95%;
+    --background: 230 18% 8%;
+    --foreground: 40 20% 96%;
 
-    --card: 345 30% 8%;
-    --card-foreground: 350 100% 95%;
+    --card: 230 18% 8%;
+    --card-foreground: 40 20% 96%;
 
-    --popover: 345 30% 8%;
-    --popover-foreground: 350 100% 95%;
+    --popover: 230 18% 8%;
+    --popover-foreground: 40 20% 96%;
 
-    --primary: 330 81% 60%;
+    --primary: 343 89% 61%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 345 20% 12%;
-    --secondary-foreground: 350 100% 95%;
+    --secondary: 230 12% 14%;
+    --secondary-foreground: 40 20% 96%;
 
-    --muted: 345 20% 12%;
-    --muted-foreground: 345 15% 65%;
+    --muted: 230 12% 14%;
+    --muted-foreground: 230 10% 65%;
 
-    --accent: 330 81% 60%;
+    --accent: 343 89% 61%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 345 20% 15%;
-    --input: 345 20% 15%;
-    --ring: 330 81% 60%;
+    --border: 230 12% 16%;
+    --input: 230 12% 16%;
+    --ring: 343 89% 61%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -106,17 +111,71 @@ All colors MUST be HSL. Creating an elegant, modern aesthetic with rose/pink ton
     @apply border-border;
   }
 
+  html,
+  #root {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    overflow-x: hidden;
+    font-family: "DM Sans", sans-serif;
+    background: linear-gradient(90deg, #FFBD9F 0%, #FCCFC0 50%, #E1C9ED 100%);
+    color: var(--color-deep-slate);
+  }
+
+  section:not(#top) {
+    background: linear-gradient(90deg, #FFBD9F 0%, #FCCFC0 50%, #E1C9ED 100%);
+  }
+
+  h1 { font-size: clamp(2rem, 4vw, 4rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+  h3 { font-size: clamp(1.125rem, 1.6vw, 1.5rem); font-weight: 600; line-height: 1.3; }
+  h4 { font-size: 1.125rem; font-weight: 600; line-height: 1.35; }
+  h5 { font-size: 0.875rem; font-weight: 600; line-height: 1.35; }
+
+  .p1-r { font-size: 16px; font-weight: 400; line-height: 150%; }
+  .p1-b { font-size: 16px; font-weight: 500; line-height: 150%; }
+  .p2-r { font-size: 14px; font-weight: 400; line-height: 150%; }
+  .p2-b { font-size: 14px; font-weight: 500; line-height: 150%; }
+  .p3-r { font-size: 12px; font-weight: 400; line-height: 150%; }
+  .p3-b { font-size: 12px; font-weight: 500; line-height: 150%; }
+}
+
+.section-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+@media (min-width: 768px)  { .section-container { padding-left: 2rem; padding-right: 2rem; } }
+
+.section-pad { padding-top: 5rem; padding-bottom: 5rem; }
+@media (min-width: 768px) { .section-pad { padding-top: 6.75rem; padding-bottom: 6.75rem; } }
+
+.rounded-shell {
+  border-radius: 1.5rem;
+}
+@media (min-width: 768px) {
+  .rounded-shell {
+    border-radius: 1.75rem;
   }
 }
 
-/* Custom animations for the web maintenance illustration */
-@keyframes gentle-float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+.glass-panel {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(239, 232, 229, 0.95);
+}
+
+.mesh-accent::before {
+  content: "";
+  position: absolute;
+  inset: -25% -10% auto;
+  height: 360px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(244, 73, 122, 0.2), transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(179, 80, 150, 0.18), transparent 45%);
+  pointer-events: none;
 }

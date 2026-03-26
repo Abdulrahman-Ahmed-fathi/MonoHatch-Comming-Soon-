@@ -34,3 +34,32 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 }
 
 export { Badge, badgeVariants }
+
+type LandingBadgeProps = {
+  children: React.ReactNode;
+  variant?: "pink" | "dark" | "outline";
+  className?: string;
+};
+
+export default function LandingBadge({
+  children,
+  variant = "pink",
+  className,
+}: LandingBadgeProps) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold",
+        variant === "pink" &&
+          "border border-french-rose/30 bg-french-rose/10 text-french-rose",
+        variant === "dark" &&
+          "bg-deep-slate text-pale-gray border border-transparent",
+        variant === "outline" &&
+          "border border-french-rose text-french-rose bg-transparent",
+        className
+      )}
+    >
+      {children}
+    </span>
+  );
+}

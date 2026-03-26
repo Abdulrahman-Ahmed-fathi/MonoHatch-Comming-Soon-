@@ -1,4 +1,5 @@
 import * as React from "react"
+import { motion, useReducedMotion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -77,3 +78,42 @@ const CardFooter = React.forwardRef<
 CardFooter.displayName = "CardFooter"
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+
+type LandingCardProps = {
+  children: React.ReactNode;
+  className?: string;
+  hover?: boolean;
+  dark?: boolean;
+  style?: React.CSSProperties;
+};
+
+export default function LandingCard({
+  children,
+  className,
+  hover,
+  dark,
+  style,
+}: LandingCardProps) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      style={style}
+      whileHover={
+        hover && !reduceMotion ? { y: -6, transition: { duration: 0.25, ease: "easeOut" } } : undefined
+      }
+      whileTap={hover && !reduceMotion ? { y: -2, scale: 0.99 } : undefined}
+      className={cn(
+        "rounded-shell p-6 md:p-7",
+        dark
+          ? "bg-near-black/60 border border-french-rose/20"
+          : "border border-[#efe8e5] bg-white shadow-card",
+        hover &&
+          "transition-all duration-300 will-change-transform hover:border-french-rose/40 hover:shadow-pink",
+        className
+      )}
+    >
+      {children}
+    </motion.div>
+  );
+}
