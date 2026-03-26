@@ -53,7 +53,7 @@ export default function WhatWeOfferSection() {
               className="group"
             >
               <LandingCard hover className="h-full border border-white/40 bg-white/70 p-5 transition-all duration-300 hover:-translate-y-1">
-                <div className="mb-5 h-32 overflow-hidden p-4">
+                <div className="mb-5 h-24 overflow-hidden sm:h-32 lg:h-40">
                   <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
                 </div>
                 <h3 className="text-lg font-bold text-[#A02A65] group-hover:text-french-rose md:text-xl">

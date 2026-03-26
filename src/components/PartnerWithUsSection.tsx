@@ -26,7 +26,7 @@ const cards = [
     ],
   },
   {
-    title: "Investors",
+    title: "investment offer",
     lines: [
       "Be part of one of the most underfunded and highest-impact sectors in emerging markets - women's digital health in MENA & Africa.",
     ],
@@ -36,7 +36,7 @@ const cards = [
 const collaborationOptions = [
   "Doctors & Healthcare Providers",
   "Brands & Communities",
-  "Investors",
+  "investment offer",
   "Clinical validation & review",
 ];
 
@@ -239,22 +239,24 @@ export default function PartnerWithUsSection() {
                       </label>
                     </div>
 
-                    <fieldset className="space-y-3">
-                      <legend className="text-sm font-medium">Type of Collaboration</legend>
-                      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                        {collaborationOptions.map((option) => (
-                          <label key={option} className="flex items-center gap-2 text-sm cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={form.collaborationTypes.includes(option)}
-                              onChange={() => handleCheckbox(option)}
-                              className="h-4 w-4 rounded border-rose-300 text-french-rose focus:ring-french-rose"
-                            />
-                            <span className="text-sm md:text-base">{option}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </fieldset>
+                    <div className="rounded-xl border border-rose-200 bg-rose-50/50 p-4">
+                      <fieldset className="space-y-3">
+                        <legend className="text-sm font-medium">Type of Collaboration</legend>
+                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                          {collaborationOptions.map((option) => (
+                            <label key={option} className="flex items-center gap-2 text-sm cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={form.collaborationTypes.includes(option)}
+                                onChange={() => handleCheckbox(option)}
+                                className="h-4 w-4 rounded border-rose-300 text-french-rose focus:ring-french-rose"
+                              />
+                              <span className="text-sm md:text-base text-french-rose">{option}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </fieldset>
+                    </div>
 
                     <label className="space-y-1 text-sm">
                       <span className="font-medium">Collaboration Brief</span>
