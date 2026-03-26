@@ -54,3 +54,80 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
+
+type LandingButtonProps = {
+  variant?: "primary" | "secondary" | "ghost" | "white";
+  size?: "sm" | "md" | "lg";
+  children: React.ReactNode;
+  onClick?: () => void;
+  href?: string;
+  className?: string;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  ariaLabel?: string;
+};
+
+const sizeClasses: Record<NonNullable<LandingButtonProps["size"]>, string> = {
+  sm: "px-5 py-2.5 text-sm",
+  md: "px-7 py-3.5 text-sm md:text-base",
+  lg: "px-10 py-4 text-base md:text-lg",
+};
+
+const variantClasses: Record<NonNullable<LandingButtonProps["variant"]>, string> = {
+  primary:
+    "bg-french-rose text-white rounded-full font-semibold hover:bg-french-rose-shade1 shadow-pink transition-all hover:shadow-glow",
+  secondary:
+    "border border-french-rose/45 bg-white text-french-rose rounded-full font-semibold hover:bg-french-rose/5 transition-all",
+  ghost: "text-french-rose hover:underline rounded-full bg-transparent",
+  white:
+    "bg-white text-french-rose rounded-full font-semibold hover:bg-warm-white shadow-lg transition-all",
+};
+
+const focusRing =
+  "focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2";
+
+export default function LandingButton({
+  variant = "primary",
+  size = "md",
+  children,
+  onClick,
+  href,
+  className,
+  type = "button",
+  disabled,
+  ariaLabel,
+}: LandingButtonProps) {
+  const classes = cn(
+    "inline-flex items-center justify-center font-semibold transition-all duration-300",
+    focusRing,
+    "disabled:cursor-not-allowed disabled:opacity-60",
+    variantClasses[variant],
+    sizeClasses[size],
+    className
+  );
+
+  if (href) {
+    return (
+      <a
+        href={href}
+        className={classes}
+        aria-label={ariaLabel}
+        onClick={onClick}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      className={classes}
+      disabled={disabled}
+      aria-label={ariaLabel}
+    >
+      {children}
+    </button>
+  );
+}
