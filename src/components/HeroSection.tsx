@@ -15,7 +15,7 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute -right-16 top-32 h-72 w-72 rounded-full bg-mulberry/10 blur-[100px]" />
       <div className="pointer-events-none absolute left-1/2 top-16 h-24 w-24 -translate-x-1/2 rounded-full bg-white/70 blur-2xl" />
 
-      <div className="absolute inset-0 bg-black/45" />
+      
 
       <div className="section-container section-pad relative z-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <div className="order-1 lg:order-none">
@@ -36,10 +36,9 @@ export default function HeroSection() {
               transition={{ duration: 0.7, delay: delays[1] / 1000 }}
               className="mt-5 text-white"
             >
-              Empowering Women to Reach
-              <br />
+            
               <span className="bg-gradient-to-r from-french-rose to-mulberry bg-clip-text text-transparent">
-                Their Highest Level of Health
+               Empowering Women to Reach Their Optimum Level of Health
               </span>
             </motion.h1>
 
@@ -48,10 +47,10 @@ export default function HeroSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.65, delay: delays[2] / 1000 }}
-              className="p1-r mt-6 max-w-lg text-white/85"
+              className="p1-r mt-6 max-w-lg text-slate-700/85"
             >
               Mono Hatch is a digital platform dedicated to supporting girls and women
-              in achieving optimal physical and mental well-being through education,
+              in achieving optimum physical and mental well-being through education,
               AI-powered guidance, and a supportive community.
             </motion.p>
 
@@ -69,7 +68,7 @@ export default function HeroSection() {
                 Free Trial
               </a>
               <a
-                href="#about"
+                href="#footer"
                 className="inline-flex items-center justify-center rounded-full border border-french-rose/40 bg-white px-8 py-3.5 font-semibold text-french-rose transition-all hover:bg-french-rose/5 hover:border-french-rose/70 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2"
               >
                 Explore Mono Hatch
@@ -81,7 +80,7 @@ export default function HeroSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.55, delay: delays[4] / 1000 }}
-              className="p3-r mt-8 text-white/70"
+              className="p3-r mt-8 text-slate-700/70"
             >
               Trusted by women across Egypt · Validated with Faculty of Nursing,
               Damanhour University

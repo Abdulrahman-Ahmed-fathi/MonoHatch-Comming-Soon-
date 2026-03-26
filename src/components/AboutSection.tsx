@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { Heart, Brain, Eye, TrendingUp } from "lucide-react";
 import SectionHeading from "@/components/ui/SectionHeading";
 import LandingCard from "@/components/ui/card";
 
@@ -6,18 +7,22 @@ const pillars = [
   {
     title: "Physical Health",
     body: "Comprehensive tools to track and improve your physical well-being at every life stage.",
+    icon: Heart,
   },
   {
     title: "Mental Well-being",
     body: "Resources and guidance to support emotional resilience and mental wellness.",
+    icon: Brain,
   },
   {
     title: "Self-Awareness",
     body: "Learn to understand your body, cycles, and signals through education and tracking.",
+    icon: Eye,
   },
   {
     title: "Personal Growth",
     body: "A community and content library that supports your journey of becoming your best self.",
+    icon: TrendingUp,
   },
 ];
 
@@ -46,7 +51,10 @@ export default function AboutSection() {
               transition={{ duration: 0.6, delay: i * 0.06 }}
             >
               <LandingCard hover className="text-center">
-                <h4 className="text-ink-warm">{p.title}</h4>
+                <div className="mb-3 flex items-center justify-center gap-2">
+                  <p.icon className="h-6 w-6 text-french-rose" />
+                  <h4 className="text-ink-warm">{p.title}</h4>
+                </div>
                 <p className="p2-r mt-2 text-ink-warm/70">{p.body}</p>
               </LandingCard>
             </motion.div>
