@@ -2,10 +2,12 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Facebook, Instagram } from "lucide-react";
 import { SiLinkedin, SiTiktok } from "react-icons/si";
+import { useTranslation } from "react-i18next";
 import logoUrl from "@/assets/logo.png";
 import { saveStayTunedEntry } from "@/lib/formStorage";
 
 export default function Footer() {
+  const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const initial = reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.98 };
 
@@ -15,7 +17,7 @@ export default function Footer() {
 
   const handleSubscribe = async () => {
     if (!subscribeEmail.trim() || isSubmitting) {
-      setSubscribeStatus("Please enter a valid email address.");
+      setSubscribeStatus(t("footer.invalidEmail"));
       return;
     }
 
@@ -26,10 +28,10 @@ export default function Footer() {
         email: subscribeEmail.trim(),
         submittedAt: new Date().toISOString(),
       });
-      setSubscribeStatus("Thanks! You are subscribed.");
+      setSubscribeStatus(t("footer.thanksSubscribe"));
       setSubscribeEmail("");
     } catch {
-      setSubscribeStatus("We could not save your email right now. Please try again.");
+      setSubscribeStatus(t("footer.subscribeError"));
     } finally {
       setIsSubmitting(false);
     }
@@ -48,13 +50,11 @@ export default function Footer() {
       >
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="mb-4 flex items-center gap-2">
               <img src={logoUrl} alt="Mono Hatch" className="h-20 w-auto" />
-              <span className="text-2xl font-bold text-french-rose">Mono Hatch</span>
+              <span className="text-2xl font-bold text-french-rose">{t("brand.name")}</span>
             </div>
-            <p className="text-sm text-[#4B3A44] opacity-90">
-              MonoHatch is a digital health platform designed to support adolescent girls and mothers through AI-powered guidance, smart health tracking, and trusted medical care.
-            </p>
+            <p className="text-sm text-[#4B3A44] opacity-90">{t("footer.description")}</p>
             <div className="mt-5 flex gap-2">
               <a
                 href="https://www.facebook.com/share/1BfhzBoYdF/"
@@ -92,54 +92,67 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-3">Explore More</h4>
+            <h4 className="mb-3 text-lg font-semibold">{t("footer.explore")}</h4>
             <ul className="space-y-2 text-sm font-medium">
-              <li><a href="#about" className="hover:underline">About Us</a></li>
-              <li><a href="#partner" className="hover:underline">Partnerships</a></li>
-              <li><a href="#team" className="hover:underline">Our Team</a></li>
-              <li><a href="#partner" className="hover:underline">Validations</a></li>
-              <li><a href="#contact" className="hover:underline">Contact Us</a></li>
+              <li>
+                <a href="#about" className="hover:underline">
+                  {t("footer.aboutUs")}
+                </a>
+              </li>
+              <li>
+                <a href="#partner" className="hover:underline">
+                  {t("footer.partnerships")}
+                </a>
+              </li>
+              <li>
+                <a href="#team" className="hover:underline">
+                  {t("footer.ourTeam")}
+                </a>
+              </li>
+              <li>
+                <a href="#partner" className="hover:underline">
+                  {t("footer.validations")}
+                </a>
+              </li>
+              <li>
+                <a href="#footer" className="hover:underline">
+                  {t("footer.contactUs")}
+                </a>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-3">Download Links </h4>
-            <h6 className="text-french-rose">coming soon</h6>
-            {/* <ul className="space-y-2 text-sm font-medium">
-              <li><a href="#" className="hover:underline">Google Play</a></li>
-              <li><a href="#" className="hover:underline">App Store</a></li>
-              <li><a href="#" className="hover:underline">Direct Link</a></li>
-            </ul> */}
+            <h4 className="mb-3 text-lg font-semibold">{t("footer.downloadLinks")}</h4>
+            <h6 className="text-french-rose">{t("footer.comingSoon")}</h6>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-3">Stay Tuned And Updated</h4>
-            <p className="text-sm text-[#4B3A44] opacity-90 mb-3">Enter your email to be notified about our news.</p>
+            <h4 className="mb-3 text-lg font-semibold">{t("footer.stayTuned")}</h4>
+            <p className="mb-3 text-sm text-[#4B3A44] opacity-90">{t("footer.stayTunedHint")}</p>
             <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 type="email"
                 value={subscribeEmail}
                 onChange={(e) => setSubscribeEmail(e.target.value)}
-                placeholder="Enter Your E-mail"
+                placeholder={t("footer.emailPlaceholder")}
                 className="w-full rounded-full border border-white/60 bg-white/70 px-4 py-2 text-sm text-[#362B34] outline-none focus:border-french-rose focus:ring focus:ring-french-rose/30"
               />
               <button
                 type="button"
                 onClick={handleSubscribe}
                 disabled={isSubmitting}
-                className="rounded-full bg-french-rose px-5 py-2 text-sm font-semibold text-white hover:bg-[#ff5688] transition"
+                className="rounded-full bg-french-rose px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#ff5688]"
               >
-                {isSubmitting ? "Saving..." : "Subscribe"}
+                {isSubmitting ? t("footer.saving") : t("footer.subscribe")}
               </button>
             </div>
-            {subscribeStatus ? (
-              <p className="mt-2 text-sm text-white/90">{subscribeStatus}</p>
-            ) : null}
+            {subscribeStatus ? <p className="mt-2 text-sm text-white/90">{subscribeStatus}</p> : null}
           </div>
         </div>
 
         <div className="mt-10 border-t border-white/45 pt-4 text-center text-sm text-[#4B3A44] opacity-90">
-          © 2026 Mono Hatch. All rights reserved.
+          {t("footer.copyright")}
         </div>
       </motion.div>
     </footer>

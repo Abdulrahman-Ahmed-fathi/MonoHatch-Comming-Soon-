@@ -1,0 +1,308 @@
+const en = {
+  brand: {
+    name: "Mono Hatch",
+  },
+  language: {
+    en: "EN",
+    ar: "AR",
+    switchLabel: "Language",
+  },
+  nav: {
+    about: "About",
+    whatWeOffer: "What We Offer",
+    impact: "Impact",
+    ourTeam: "Our Team",
+    partnerships: "Partnerships",
+    downloadApp: "Download the App",
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+  },
+  download: {
+    button: "Download the App",
+    thanksTitle: "Thank you for downloading Mono Hatch",
+    thanksBody:
+      "Your download has started. This link is safe and official — it comes directly from our Expo build pipeline.",
+    safetyNote:
+      "Some Android devices may warn that the app is from an untrusted source. That is expected for sideloaded trial APKs and does not mean the file is unsafe.",
+    dismiss: "Got it",
+  },
+  hero: {
+    badge: "Women's Health Platform",
+    headline: "Empowering Women to Reach Their Optimum Level of Health",
+    description:
+      "Mono Hatch is a digital platform dedicated to supporting girls and women in achieving optimum physical and mental well-being through education, AI-powered guidance, and a supportive community.",
+    explore: "Explore Mono Hatch",
+    trustLine:
+      "Trusted by women across Egypt · Validated with Faculty of Nursing, Damanhour University",
+  },
+  about: {
+    title: "Who We Are",
+    intro:
+      "Mono Hatch is a HealthTech-driven women's health platform designed to support women across life stages. It positions health as more than medical care - including awareness, mindset, community, and ongoing support.",
+    pillars: {
+      physical: {
+        title: "Physical Health",
+        body: "Comprehensive tools to track and improve your physical well-being at every life stage.",
+      },
+      mental: {
+        title: "Mental Well-being",
+        body: "Resources and guidance to support emotional resilience and mental wellness.",
+      },
+      awareness: {
+        title: "Self-Awareness",
+        body: "Learn to understand your body, cycles, and signals through education and tracking.",
+      },
+      growth: {
+        title: "Personal Growth",
+        body: "A community and content library that supports your journey of becoming your best self.",
+      },
+    },
+    quote:
+      "To build a future where every girl and woman has access to the knowledge, tools, and support she needs to live a healthy, confident, and empowered life.",
+  },
+  features: {
+    title: "What We Offer",
+    subtitle: "powering your health journey.",
+    items: {
+      ai: {
+        title: "AI Medical Assistant",
+        body: "Smart support, whenever she needs it.",
+      },
+      care: {
+        title: "Medical Care Access",
+        body: "Professional care within reach.",
+      },
+      learn: {
+        title: "Learn Section",
+        body: "Health knowledge made simple.",
+      },
+      tracking: {
+        title: "Smart Tracking",
+        body: "Understand your body better every day.",
+      },
+    },
+    quote:
+      "Mono Hatch is not just a digital platform — It's a movement empowering women through knowledge and community.",
+  },
+  impact: {
+    title: "Our Impact & Attraction",
+    subtitle: "Milestones that define our journey.",
+    milestones: {
+      foundation: {
+        title: "Foundation Built",
+        body: "Built a strong foundation for a women's health platform.",
+      },
+      community: {
+        title: "Community Growing",
+        body: "Developed a growing community of engaged users and supporters.",
+      },
+      content: {
+        title: "Educational Content Created",
+        body: "Created educational content focused on women's well-being.",
+      },
+      collaborations: {
+        title: "Sector Collaborations",
+        body: "Started collaborations with partners in health and community sectors.",
+      },
+      programs: {
+        title: "Entrepreneurship Programs",
+        body: "Participated at: Creative Before Incubation, Flat6Labs, Orange Corners Egypt, and LSL.",
+      },
+      validation: {
+        title: "Clinical Validation",
+        body: "Completed clinical validation with the Faculty of Nursing, Damanhour University to ensure medical accuracy.",
+      },
+    },
+    closing: "We are just getting started.",
+  },
+  freeTrialSection: {
+    label: "FREE TRIAL",
+    title: "Start Your Free Trial",
+    description:
+      "Be among the first to experience Mono Hatch with early access and exclusive features.",
+    bullets: [
+      "Early access to the app",
+      "Exclusive features & early offers",
+      "Help shape the future of women's health",
+    ],
+    cta: "Start Your Free Trial",
+    privacy: "No spam. Your data is safe with us.",
+  },
+  team: {
+    title: "Our Team",
+    subtitle: "The people building the future of women's health.",
+    linkedin: "LinkedIn",
+    members: {
+      eman: { role: "Founder & UI/UX Designer" },
+      ahmed: { role: "Project Manager & Co-founder" },
+      yousef: { role: "AI Engineer & Co-founder" },
+      abdulrahmanAhmed: { role: "Backend Developer" },
+      abdulrahmanAbass: { role: "Full Stack Developer" },
+      amira: { role: "Chief Marketing Organizer" },
+      sara: { role: "Flutter Developer" },
+      mirna: { role: "Flutter Developer" },
+      jihad: { role: "Graphic Designer, Video Editor" },
+      mazen: { role: "UI/UX Designer" },
+    },
+  },
+  partner: {
+    title: "Partner With Mono Hatch",
+    subtitle: "Join us in building the future of women's health.",
+    cards: {
+      doctors: {
+        title: "Doctors & Healthcare Providers",
+        body: "Join our clinical network and provide expert guidance to women who need it most. Shape evidence-based features from the inside.",
+      },
+      brands: {
+        title: "Brands & Communities",
+        body: "Partner with a platform that reaches engaged, health-conscious women. Align your brand with a mission that matters.",
+      },
+      investment: {
+        title: "Investment Offer",
+        body: "Be part of one of the most underfunded and highest-impact sectors in emerging markets - women's digital health in MENA & Africa.",
+      },
+    },
+    featuredBadge: "Recommended",
+    cardCta: "Explore partnership →",
+    cta_hint: "Tell us how you'd like to work together — we'll respond within 48 hours.",
+    collaborate: "Collaborate With Us",
+    dialog: {
+      title: "Partner Collaboration Request",
+      description: "Please fill in your details and we'll get back to you within 24-48 hours.",
+      fullName: "Full Name",
+      organization: "Organization / Clinic Name",
+      role: "Role / Title",
+      email: "Email Address",
+      phone: "Phone Number",
+      specialization: "Specialization (for doctors)",
+      experience: "Years of Experience",
+      website: "Website / Social media page (if present)",
+      collaborationType: "Type of Collaboration",
+      brief: "Collaboration Brief",
+      briefPlaceholder: "Tell us about your collaboration ideas...",
+      cancel: "Cancel",
+      submit: "Submit Request",
+      submitting: "Submitting...",
+      error: "We could not submit your request right now. Please try again.",
+      successTitle: "Thank you for your interest!",
+      successBody:
+        "Your collaboration request has been received. Our team will review your information and contact you soon.",
+      close: "Close",
+    },
+    collaborationOptions: {
+      doctors: "Doctors & Healthcare Providers",
+      brands: "Brands & Communities",
+      investment: "investment offer",
+      clinical: "Clinical validation & review",
+    },
+  },
+  workshop: {
+    title: "Our Workshop",
+    cardTitle: "Our First Workshop",
+    comingSoon: "COMING SOON",
+    description:
+      "The first Mono Hatch workshop for confidence building, personal growth, and better health awareness - designed for women, by women.",
+    bullets: [
+      "Build confidence and self-esteem",
+      "Join a supportive, empowering community",
+      "Learn about personal growth and independence",
+      "Take steps toward self-development",
+      "Understand your physical and mental health",
+    ],
+    emailLabel: "Email address",
+    placeholder: "Enter your email",
+    notify: "Notify Me",
+    saving: "Saving...",
+    thanks: "Thanks! We will notify you soon.",
+    error: "We could not save your email right now. Please try again.",
+  },
+  closing: {
+    label: "THIS IS THE BEGINNING",
+    headline: "Mono Hatch is more than a platform - it's a vision.",
+    body: "A vision to transform women's health understanding and experience. Join us in making it real.",
+    startTrial: "Start Your Free Trial",
+    learnMore: "Learn More",
+  },
+  footer: {
+    description:
+      "MonoHatch is a digital health platform designed to support adolescent girls and mothers through AI-powered guidance, smart health tracking, and trusted medical care.",
+    explore: "Explore More",
+    aboutUs: "About Us",
+    partnerships: "Partnerships",
+    ourTeam: "Our Team",
+    validations: "Validations",
+    contactUs: "Contact Us",
+    downloadLinks: "Download Links",
+    comingSoon: "coming soon",
+    stayTuned: "Stay Tuned And Updated",
+    stayTunedHint: "Enter your email to be notified about our news.",
+    emailPlaceholder: "Enter Your E-mail",
+    subscribe: "Subscribe",
+    saving: "Saving...",
+    invalidEmail: "Please enter a valid email address.",
+    thanksSubscribe: "Thanks! You are subscribed.",
+    subscribeError: "We could not save your email right now. Please try again.",
+    copyright: "© 2026 Mono Hatch. All rights reserved.",
+  },
+  register: {
+    backHome: "Back to home",
+    phase1: {
+      title: "Start Your Free Trial",
+      subtitle: "Create your account to unlock early access to Mono Hatch.",
+      fullName: "Full Name",
+      fullNamePlaceholder: "Your full name",
+      email: "Email",
+      emailPlaceholder: "you@example.com",
+      phone: "Phone Number",
+      phonePlaceholder: "+20 1xx xxx xxxx",
+      submit: "Continue",
+      submitting: "Submitting...",
+      error: "We could not save your details right now. Please try again.",
+    },
+    phase2: {
+      thanksNamed: "Thank you, {{name}}!",
+      thanksGeneric: "You're all set!",
+      subtitle: "Your registration is complete. Download the app below to get started.",
+      downloadCta: "Download the App",
+    },
+  },
+  login: {
+    title: "Mono Hatch Dashboard Login",
+    subtitle: "Enter credentials to access the dashboard.",
+    username: "Username",
+    password: "Password",
+    submit: "Login",
+    error: "Invalid username or password",
+  },
+  dashboard: {
+    title: "Admin Dashboard",
+    subtitle:
+      "Review Supabase form entries for free trial, partner collaboration, workshop notifications, and subscribers.",
+    refresh: "Refresh data",
+    logout: "Sign out",
+    loading: "Loading submissions from Supabase...",
+    loadError: "We could not load dashboard data from Supabase.",
+    empty: "No entries yet.",
+    tabs: {
+      freeTrial: "Free Trial",
+      partner: "Partner",
+      workshop: "Workshop",
+      stayTuned: "Stay Tuned",
+    },
+    columns: {
+      index: "#",
+      name: "Name",
+      email: "Email",
+      phone: "Phone",
+      organization: "Organization",
+      role: "Role",
+      submittedAt: "Submitted At",
+    },
+  },
+  common: {
+    loading: "Loading...",
+  },
+} as const;
+
+export default en;
+export type TranslationKeys = typeof en;

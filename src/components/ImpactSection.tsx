@@ -1,74 +1,116 @@
 import { motion, useReducedMotion } from "framer-motion";
+import {
+  BookOpen,
+  Building2,
+  Handshake,
+  Rocket,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "@/components/ui/SectionHeading";
-import LandingCard from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
-const milestones = [
-  {
-    title: "Foundation Built",
-    body: "Built a strong foundation for a women's health platform.",
-  },
-  {
-    title: "Community Growing",
-    body: "Developed a growing community of engaged users and supporters.",
-  },
-  {
-    title: "Educational Content Created",
-    body: "Created educational content focused on women's well-being.",
-  },
-  {
-    title: "Sector Collaborations",
-    body: "Started collaborations with partners in health and community sectors.",
-  },
-  {
-    title: "Entrepreneurship Programs",
-    body: "Participated at: Creative Before Incubation, Flat6Labs, Orange Corners Egypt, and LSL.",
-  },
-  {
-    title: "Clinical Validation",
-    body: "Completed clinical validation with the Faculty of Nursing, Damanhour University to ensure medical accuracy.",
-  },
-];
+const milestoneKeys = [
+  "foundation",
+  "community",
+  "content",
+  "collaborations",
+  "programs",
+  "validation",
+] as const;
+
+const milestoneIcons = {
+  foundation: Building2,
+  community: Users,
+  content: BookOpen,
+  collaborations: Handshake,
+  programs: Rocket,
+  validation: ShieldCheck,
+} as const;
+
+const wideMilestoneIndices = new Set([0, 3]);
 
 export default function ImpactSection() {
+  const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const initial = reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.98 };
 
   return (
     <section id="impact" className="bg-[#fbf7f7]">
       <div className="section-container section-pad">
-        <SectionHeading
-          title="Our Impact & Attraction"
-          subtitle="Milestones that define our journey."
-        />
+        <SectionHeading title={t("impact.title")} subtitle={t("impact.subtitle")} />
 
-        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {milestones.map((m, idx) => (
-            <motion.div
-              key={m.title}
-              initial={initial}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.28 }}
-              transition={{ duration: 0.65, delay: idx * 0.06 }}
-            >
-              <LandingCard hover className="min-h-[180px]">
-                <div className="mt-5 h-px w-full bg-french-rose/20" />
+        <div className="mt-10 grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {milestoneKeys.map((key, idx) => {
+            const Icon = milestoneIcons[key];
+            const isWide = wideMilestoneIndices.has(idx);
 
-                <h4 className="mt-4 text-ink-warm">{m.title}</h4>
-                <p className="p2-r mt-2 text-ink-warm/70">{m.body}</p>
-              </LandingCard>
-            </motion.div>
-          ))}
+            return (
+              <motion.div
+                key={key}
+                initial={initial}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.28 }}
+                transition={{ duration: 0.65, delay: idx * 0.06 }}
+                whileHover={reduceMotion ? undefined : { y: -3 }}
+                className={cn("flex h-full", isWide && "lg:col-span-2")}
+              >
+                <div
+                  className={cn(
+                    "flex h-full w-full flex-col rounded-shell border border-[#efe8e5] bg-white p-7 shadow-card",
+                    isWide && "lg:flex-row lg:items-start lg:gap-6 lg:p-8"
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "mb-5 flex shrink-0 items-center justify-center rounded-2xl bg-french-rose/10",
+                      isWide ? "h-11 w-11 lg:mb-0 lg:h-12 lg:w-12" : "h-11 w-11"
+                    )}
+                  >
+                    <Icon
+                      className={cn(
+                        "text-french-rose",
+                        isWide ? "h-5 w-5 lg:h-6 lg:w-6" : "h-5 w-5"
+                      )}
+                      aria-hidden
+                    />
+                  </div>
+                  <div className={cn("flex min-w-0 flex-1 flex-col", isWide && "lg:justify-center")}>
+                    <h4
+                      className={cn(
+                        "text-lg font-semibold leading-snug text-ink-warm",
+                        isWide && "lg:text-xl"
+                      )}
+                    >
+                      {t(`impact.milestones.${key}.title`)}
+                    </h4>
+                    <p
+                      className={cn(
+                        "p2-r mt-2 flex-1 leading-relaxed text-ink-warm/70",
+                        isWide && "lg:p1-r"
+                      )}
+                    >
+                      {t(`impact.milestones.${key}.body`)}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <motion.h3
-          className="mt-12 text-center text-xl font-semibold italic text-french-rose md:mt-16 md:text-2xl"
+        <motion.div
+          className="mt-12 flex justify-center md:mt-16"
           initial={initial}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.7, delay: 0.05 }}
         >
-          &quot;We are just getting started.&quot;
-        </motion.h3>
+          <p className="inline-block rounded-full border border-french-rose/20 bg-french-rose/8 px-8 py-4 text-center text-xl font-semibold italic text-french-rose md:text-2xl">
+            &quot;{t("impact.closing")}&quot;
+          </p>
+        </motion.div>
       </div>
     </section>
   );

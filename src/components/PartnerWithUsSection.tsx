@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Sparkles, Stethoscope, TrendingUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { savePartnerEntry } from "@/lib/formStorage";
 import {
@@ -13,35 +14,17 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
-const cards = [
-  {
-    title: "Doctors & Healthcare Providers",
-    lines: [
-      "Join our clinical network and provide expert guidance to women who need it most. Shape evidence-based features from the inside.",
-    ],
-  },
-  {
-    title: "Brands & Communities",
-    lines: [
-      "Partner with a platform that reaches engaged, health-conscious women. Align your brand with a mission that matters.",
-    ],
-  },
-  {
-    title: "investment offer",
-    lines: [
-      "Be part of one of the most underfunded and highest-impact sectors in emerging markets - women's digital health in MENA & Africa.",
-    ],
-  },
-];
+const cardKeys = ["doctors", "brands", "investment"] as const;
+const collaborationKeys = ["doctors", "brands", "investment", "clinical"] as const;
 
-const collaborationOptions = [
-  "Doctors & Healthcare Providers",
-  "Brands & Communities",
-  "investment offer",
-  "Clinical validation & review",
-];
+const cardIcons = {
+  doctors: Stethoscope,
+  brands: Sparkles,
+  investment: TrendingUp,
+} as const;
 
 export default function PartnerWithUsSection() {
+  const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const initial = reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.98 };
 
@@ -66,14 +49,14 @@ export default function PartnerWithUsSection() {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleCheckbox = (option: string) => {
+  const handleCheckbox = (optionKey: string) => {
     setForm((prev) => {
-      const alreadySelected = prev.collaborationTypes.includes(option);
+      const alreadySelected = prev.collaborationTypes.includes(optionKey);
       return {
         ...prev,
         collaborationTypes: alreadySelected
-          ? prev.collaborationTypes.filter((item) => item !== option)
-          : [...prev.collaborationTypes, option],
+          ? prev.collaborationTypes.filter((item) => item !== optionKey)
+          : [...prev.collaborationTypes, optionKey],
       };
     });
   };
@@ -95,7 +78,7 @@ export default function PartnerWithUsSection() {
       });
       setSubmitted(true);
     } catch {
-      setSubmitError("We could not submit your request right now. Please try again.");
+      setSubmitError(t("partner.dialog.error"));
     } finally {
       setIsSubmitting(false);
     }
@@ -125,51 +108,66 @@ export default function PartnerWithUsSection() {
   return (
     <section id="partner" className="bg-white">
       <div className="section-container section-pad">
-        <SectionHeading title="Partner With Mono Hatch" subtitle="Join us in building the future of women's health." />
+        <SectionHeading title={t("partner.title")} subtitle={t("partner.subtitle")} />
 
-        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
-          {cards.map((c, idx) => (
-            <motion.div
-              key={c.title}
-              initial={initial}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.65, delay: idx * 0.07 }}
-              className="relative overflow-hidden rounded-shell border border-[#efe8e5] bg-white p-7 shadow-card"
-            >
-              <p className="text-xs font-semibold tracking-[0.16em] text-french-rose/70">{String(idx + 1).padStart(2, "0")}</p>
-              <h3 className="mt-4 text-xl font-semibold text-ink-warm md:text-2xl">{c.title}</h3>
-              <p className="p2-r mt-3 text-ink-warm/75">{c.lines[0]}</p>
-            </motion.div>
-          ))}
+        <div className="mt-10 grid grid-cols-1 items-start gap-5 md:grid-cols-3 md:gap-6">
+          {cardKeys.map((key, idx) => {
+            const Icon = cardIcons[key];
+            return (
+              <motion.div
+                key={key}
+                initial={initial}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.65, delay: idx * 0.06 }}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
+                className="flex h-full flex-col rounded-shell border border-[#efe8e5] bg-white p-7 shadow-card"
+              >
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-french-rose/10">
+                  <Icon className="h-6 w-6 text-french-rose" aria-hidden />
+                </div>
+
+                <h3 className="mt-1 text-xl font-semibold text-ink-warm">
+                  {t(`partner.cards.${key}.title`)}
+                </h3>
+                <p className="p2-r mt-3 flex-1 leading-relaxed text-ink-warm/75">
+                  {t(`partner.cards.${key}.body`)}
+                </p>
+                <p className="mt-5 text-sm font-medium text-french-rose">
+                  {t("partner.cardCta")}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
 
         <motion.div
-          className="mt-14 text-center md:mt-16"
+          className="mt-16 text-center"
           initial={initial}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.65, delay: 0.06 }}
         >
+          <p className="p2-r mb-4 text-center text-ink-warm/60">{t("partner.cta_hint")}</p>
           <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
               <button className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-french-rose px-10 py-3.5 text-base font-semibold text-white shadow-pink transition-all hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2 motion-safe:animate-pulseGlow md:px-12 md:py-4 md:text-lg">
-                Collaborate With Us
+                {t("partner.collaborate")}
               </button>
             </DialogTrigger>
-            <DialogContent className="bg-white p-4 md:p-6 lg:p-8 rounded-3xl w-[min(100vw-1rem,48rem)] max-h-[90vh] overflow-y-auto">
+            <DialogContent className="w-[min(100vw-1rem,48rem)] max-h-[90vh] overflow-y-auto rounded-3xl bg-white p-4 md:p-6 lg:p-8">
               {!submitted ? (
                 <>
-                  <DialogHeader className="text-center md:text-left">
-                    <DialogTitle className="text-lg md:text-xl">Partner Collaboration Request</DialogTitle>
+                  <DialogHeader className="text-center md:text-start">
+                    <DialogTitle className="text-lg md:text-xl">{t("partner.dialog.title")}</DialogTitle>
                     <DialogDescription className="text-sm md:text-base">
-                      Please fill in your details and we&apos;ll get back to you within 24-48 hours.
+                      {t("partner.dialog.description")}
                     </DialogDescription>
                   </DialogHeader>
-                  <form onSubmit={handleSubmit} className="mt-4 md:mt-6 space-y-4 md:space-y-5">
-                    <div className="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
+                  <form onSubmit={handleSubmit} className="mt-4 space-y-4 md:mt-6 md:space-y-5">
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
                       <label className="space-y-1 text-sm">
-                        <span className="font-medium">Full Name</span>
+                        <span className="font-medium">{t("partner.dialog.fullName")}</span>
                         <input
                           value={form.fullName}
                           onChange={(e) => handleInputChange("fullName", e.target.value)}
@@ -178,7 +176,7 @@ export default function PartnerWithUsSection() {
                         />
                       </label>
                       <label className="space-y-1 text-sm">
-                        <span className="font-medium">Organization / Clinic Name</span>
+                        <span className="font-medium">{t("partner.dialog.organization")}</span>
                         <input
                           value={form.organization}
                           onChange={(e) => handleInputChange("organization", e.target.value)}
@@ -187,9 +185,9 @@ export default function PartnerWithUsSection() {
                       </label>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
                       <label className="space-y-1 text-sm">
-                        <span className="font-medium">Role / Title</span>
+                        <span className="font-medium">{t("partner.dialog.role")}</span>
                         <input
                           value={form.role}
                           onChange={(e) => handleInputChange("role", e.target.value)}
@@ -197,7 +195,7 @@ export default function PartnerWithUsSection() {
                         />
                       </label>
                       <label className="space-y-1 text-sm">
-                        <span className="font-medium">Email Address</span>
+                        <span className="font-medium">{t("partner.dialog.email")}</span>
                         <input
                           type="email"
                           value={form.email}
@@ -208,9 +206,9 @@ export default function PartnerWithUsSection() {
                       </label>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
                       <label className="space-y-1 text-sm">
-                        <span className="font-medium">Phone Number</span>
+                        <span className="font-medium">{t("partner.dialog.phone")}</span>
                         <input
                           type="tel"
                           value={form.phone}
@@ -220,7 +218,7 @@ export default function PartnerWithUsSection() {
                         />
                       </label>
                       <label className="space-y-1 text-sm">
-                        <span className="font-medium">Specialization (for doctors)</span>
+                        <span className="font-medium">{t("partner.dialog.specialization")}</span>
                         <input
                           value={form.specialization}
                           onChange={(e) => handleInputChange("specialization", e.target.value)}
@@ -229,9 +227,9 @@ export default function PartnerWithUsSection() {
                       </label>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-3 md:gap-4 md:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
                       <label className="space-y-1 text-sm">
-                        <span className="font-medium">Years of Experience</span>
+                        <span className="font-medium">{t("partner.dialog.experience")}</span>
                         <input
                           type="text"
                           value={form.experience}
@@ -240,7 +238,7 @@ export default function PartnerWithUsSection() {
                         />
                       </label>
                       <label className="space-y-1 text-sm">
-                        <span className="font-medium">Website / Social media page (if present)</span>
+                        <span className="font-medium">{t("partner.dialog.website")}</span>
                         <input
                           type="url"
                           value={form.website}
@@ -252,17 +250,19 @@ export default function PartnerWithUsSection() {
 
                     <div className="rounded-xl border border-rose-200 bg-rose-50/50 p-4">
                       <fieldset className="space-y-3">
-                        <legend className="text-sm font-medium">Type of Collaboration</legend>
+                        <legend className="text-sm font-medium">{t("partner.dialog.collaborationType")}</legend>
                         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                          {collaborationOptions.map((option) => (
-                            <label key={option} className="flex items-center gap-2 text-sm cursor-pointer">
+                          {collaborationKeys.map((optionKey) => (
+                            <label key={optionKey} className="flex cursor-pointer items-center gap-2 text-sm">
                               <input
                                 type="checkbox"
-                                checked={form.collaborationTypes.includes(option)}
-                                onChange={() => handleCheckbox(option)}
+                                checked={form.collaborationTypes.includes(optionKey)}
+                                onChange={() => handleCheckbox(optionKey)}
                                 className="h-4 w-4 rounded border-rose-300 text-french-rose focus:ring-french-rose"
                               />
-                              <span className="text-sm md:text-base text-french-rose">{option}</span>
+                              <span className="text-sm text-french-rose md:text-base">
+                                {t(`partner.collaborationOptions.${optionKey}`)}
+                              </span>
                             </label>
                           ))}
                         </div>
@@ -270,13 +270,13 @@ export default function PartnerWithUsSection() {
                     </div>
 
                     <label className="space-y-1 text-sm">
-                      <span className="font-medium">Collaboration Brief</span>
+                      <span className="font-medium">{t("partner.dialog.brief")}</span>
                       <textarea
                         value={form.brief}
                         onChange={(e) => handleInputChange("brief", e.target.value)}
                         rows={4}
-                        placeholder="Tell us about your collaboration ideas..."
-                        className="w-full rounded-xl border border-rose-200 px-3 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-rose-400 resize-none"
+                        placeholder={t("partner.dialog.briefPlaceholder")}
+                        className="w-full resize-none rounded-xl border border-rose-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400 md:text-base"
                       />
                     </label>
 
@@ -284,32 +284,33 @@ export default function PartnerWithUsSection() {
 
                     <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end sm:gap-3">
                       <DialogClose asChild>
-                        <button type="button" className="w-full sm:w-auto rounded-xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-rose-400">
-                          Cancel
+                        <button
+                          type="button"
+                          className="w-full rounded-xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-rose-400 sm:w-auto"
+                        >
+                          {t("partner.dialog.cancel")}
                         </button>
                       </DialogClose>
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full sm:w-auto rounded-xl bg-french-rose px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2"
+                        className="w-full rounded-xl bg-french-rose px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2 sm:w-auto"
                       >
-                        {isSubmitting ? "Submitting..." : "Submit Request"}
+                        {isSubmitting ? t("partner.dialog.submitting") : t("partner.dialog.submit")}
                       </button>
                     </div>
                   </form>
                 </>
               ) : (
-                <div className="text-center py-6 md:py-8">
-                  <div className="mx-auto mb-4 flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-french-rose/10 text-french-rose">
+                <div className="py-6 text-center md:py-8">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-french-rose/10 text-french-rose md:h-20 md:w-20">
                     <CheckCircle2 className="h-8 w-8 md:h-10 md:w-10" />
                   </div>
-                  <h3 className="text-lg md:text-xl font-semibold text-ink-warm">Thank you for your interest!</h3>
-                  <p className="mt-2 text-sm md:text-base text-ink-warm/75 px-4">
-                    Your collaboration request has been received. Our team will review your information and contact you soon.
-                  </p>
+                  <h3 className="text-lg font-semibold text-ink-warm md:text-xl">{t("partner.dialog.successTitle")}</h3>
+                  <p className="mt-2 px-4 text-sm text-ink-warm/75 md:text-base">{t("partner.dialog.successBody")}</p>
                   <div className="mt-6">
-                    <DialogClose className="w-full sm:w-auto rounded-xl bg-french-rose px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2">
-                      Close
+                    <DialogClose className="w-full rounded-xl bg-french-rose px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2 sm:w-auto">
+                      {t("partner.dialog.close")}
                     </DialogClose>
                   </div>
                 </div>

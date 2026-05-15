@@ -1,6 +1,9 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function ClosingSection() {
+  const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const initial = reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.98 };
 
@@ -15,7 +18,7 @@ export default function ClosingSection() {
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.6, delay: 0.05 }}
         >
-          THIS IS THE BEGINNING
+          {t("closing.label")}
         </motion.p>
         <motion.p
           className="text-3xl font-semibold leading-tight text-ink-warm md:text-5xl"
@@ -24,7 +27,7 @@ export default function ClosingSection() {
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.7, delay: 0.08 }}
         >
-          Mono Hatch is more than a platform - it&apos;s a vision.
+          {t("closing.headline")}
         </motion.p>
         <div className="mx-auto my-8 h-0.5 w-24 rounded-full bg-french-rose/40 md:my-10" />
         <motion.p
@@ -34,20 +37,22 @@ export default function ClosingSection() {
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.7, delay: 0.12 }}
         >
-          A vision to transform women&apos;s health understanding and experience. Join
-          us in making it real.
+          {t("closing.body")}
         </motion.p>
         <div className="mt-8 flex flex-wrap justify-center gap-3 md:mt-10 md:gap-4">
-          <motion.a
-            href="#free-trial"
+          <motion.div
             initial={initial}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.65, delay: 0.08 }}
-            className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-french-rose px-8 py-3.5 font-semibold text-white shadow-pink transition-all hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2 focus:ring-offset-peach-blossom"
           >
-            Start Your Free Trial
-          </motion.a>
+            <Link
+              to="/register"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-french-rose px-8 py-3.5 font-semibold text-white shadow-pink transition-all hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2 focus:ring-offset-peach-blossom"
+            >
+              {t("closing.startTrial")}
+            </Link>
+          </motion.div>
           <motion.a
             href="#about"
             initial={initial}
@@ -56,7 +61,7 @@ export default function ClosingSection() {
             transition={{ duration: 0.65, delay: 0.14 }}
             className="inline-flex min-h-[48px] items-center justify-center rounded-full border-2 border-french-rose/45 bg-white/50 px-8 py-3.5 font-semibold text-french-rose backdrop-blur-sm transition-all hover:bg-white focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2 focus:ring-offset-peach-blossom"
           >
-            Learn More
+            {t("closing.learnMore")}
           </motion.a>
         </div>
       </div>
