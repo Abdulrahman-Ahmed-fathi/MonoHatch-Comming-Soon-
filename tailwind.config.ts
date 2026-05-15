@@ -21,6 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: ['DM Sans', 'sans-serif'],
+				arabic: ['Cairo', 'DM Sans', 'sans-serif'],
 				space: ['Space Grotesk', 'sans-serif'],
 				display: ['Inter', 'sans-serif'],
 				body: ['DM Sans', 'sans-serif'],

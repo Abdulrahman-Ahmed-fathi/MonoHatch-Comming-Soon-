@@ -1,23 +1,19 @@
 import { type FormEvent, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { saveWorkshopEntry } from "@/lib/formStorage";
 
-const bullets = [
-  "Build confidence and self-esteem",
-  "Join a supportive, empowering community",
-  "Learn about personal growth and independence",
-  "Take steps toward self-development",
-  "Understand your physical and mental health",
-];
-
 export default function WorkshopSection() {
+  const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const initial = reduceMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.98 };
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+
+  const bullets = t("workshop.bullets", { returnObjects: true }) as string[];
 
   async function handleNotify(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,19 +30,16 @@ export default function WorkshopSection() {
       setSent(true);
       setEmail("");
     } catch {
-      setSubmitError("We could not save your email right now. Please try again.");
+      setSubmitError(t("workshop.error"));
     } finally {
       setIsSubmitting(false);
     }
   }
 
   return (
-    <section
-      id="workshop"
-      className="relative overflow-hidden bg-[#fcf9f7]"
-    >
+    <section id="workshop" className="relative overflow-hidden bg-[#fcf9f7]">
       <div className="section-container section-pad">
-        <SectionHeading title="Our Workshop" />
+        <SectionHeading title={t("workshop.title")} />
 
         <motion.div
           className="mx-auto mt-10 max-w-3xl rounded-shell border border-[#efe8e5] bg-white p-8 text-center shadow-card md:mt-12 md:p-14"
@@ -55,13 +48,10 @@ export default function WorkshopSection() {
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.7, delay: 0.06 }}
         >
-          <h2 className="text-ink-warm">Our First Workshop</h2>
-          <h6 className="text-french-rose">COMING SOON</h6>
-          <p className="p1-r mx-auto mt-4 max-w-lg text-ink-warm/75">
-            The first Mono Hatch workshop for confidence building, personal growth,
-            and better health awareness - designed for women, by women.
-          </p>
-          <ul className="mx-auto mt-8 inline-block max-w-md space-y-3 text-left">
+          <h2 className="text-ink-warm">{t("workshop.cardTitle")}</h2>
+          <h6 className="text-french-rose">{t("workshop.comingSoon")}</h6>
+          <p className="p1-r mx-auto mt-4 max-w-lg text-ink-warm/75">{t("workshop.description")}</p>
+          <ul className="mx-auto mt-8 inline-block max-w-md space-y-3 text-start">
             {bullets.map((b, i) => (
               <motion.li
                 key={b}
@@ -85,7 +75,7 @@ export default function WorkshopSection() {
             className="mx-auto mt-6 flex w-full max-w-xl flex-col gap-3 sm:flex-row"
           >
             <label htmlFor="workshop-email" className="sr-only">
-              Email address
+              {t("workshop.emailLabel")}
             </label>
             <input
               id="workshop-email"
@@ -93,7 +83,7 @@ export default function WorkshopSection() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder={t("workshop.placeholder")}
               className="min-h-[44px] flex-1 rounded-full border border-[#e8dfe4] bg-white px-5 text-sm text-ink-warm outline-none transition-all focus:border-french-rose/60 focus:ring-2 focus:ring-french-rose/20"
             />
             <button
@@ -101,12 +91,10 @@ export default function WorkshopSection() {
               disabled={isSubmitting}
               className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-french-rose px-8 py-3 font-semibold text-white shadow-pink transition-all hover:bg-french-rose-shade1 focus:outline-none focus:ring-2 focus:ring-french-rose focus:ring-offset-2"
             >
-              {isSubmitting ? "Saving..." : "Notify Me"}
+              {isSubmitting ? t("workshop.saving") : t("workshop.notify")}
             </button>
           </motion.form>
-          {sent ? (
-            <p className="p2-r mt-3 text-french-rose">Thanks! We will notify you soon.</p>
-          ) : null}
+          {sent ? <p className="p2-r mt-3 text-french-rose">{t("workshop.thanks")}</p> : null}
           {submitError ? <p className="p2-r mt-3 text-rose-600">{submitError}</p> : null}
         </motion.div>
       </div>
