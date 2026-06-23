@@ -12,8 +12,6 @@ const teamMembers = [
   { name: "Amira Heider", roleKey: "amira", image: "/uploads/Amira.jpg", linkedin: "https://www.linkedin.com/in/amira-heider-868314275/" },
   { name: "Sara Soliman", roleKey: "sara", image: "/uploads/Sara.jpeg", linkedin: "https://www.linkedin.com/in/sara-soliman233/" },
   { name: "Mirna Tarek", roleKey: "mirna", image: "/uploads/Merna.jpg", linkedin: "https://www.linkedin.com/in/mirna-tarek?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
-  { name: "Jihad Salim", roleKey: "jihad", image: "/uploads/Jehad.jpg", linkedin: "https://www.linkedin.com/in/jihad-salim-74805437a/" },
-  { name: "Mazen Mohamed", roleKey: "mazen", image: "/uploads/mazen.jpg", linkedin: "https://www.linkedin.com/in/mazen-mohammeed/" },
 ] as const;
 
 export default function TeamSection() {
