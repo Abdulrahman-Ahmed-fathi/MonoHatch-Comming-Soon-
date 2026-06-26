@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabaseClient";
+import { getSupabaseClient } from "@/lib/supabaseClient";
 
 export interface FreeTrialEntry {
   fullName: string;
@@ -22,7 +22,8 @@ export interface PartnerEntry {
 }
 
 export interface WorkshopEntry {
-  email: string;
+  email?: string;
+  phone?: string;
   submittedAt: string;
 }
 
@@ -45,6 +46,7 @@ const insertSubmission = async (
   payload: Record<string, unknown>,
   submittedAt: string,
 ) => {
+  const supabase = getSupabaseClient();
   const { error } = await supabase.from(TABLE_NAME).insert({
     form_type: formType,
     payload,
@@ -57,6 +59,7 @@ const insertSubmission = async (
 };
 
 const getSubmissions = async (formType: FormType) => {
+  const supabase = getSupabaseClient();
   const { data, error } = await supabase
     .from(TABLE_NAME)
     .select("payload, submitted_at")
@@ -136,20 +139,19 @@ export const getPartnerEntries = async (): Promise<PartnerEntry[]> => {
 };
 
 export const saveWorkshopEntry = async (entry: WorkshopEntry) => {
-  await insertSubmission(
-    "workshop",
-    {
-      email: entry.email,
-    },
-    entry.submittedAt,
-  );
+  const payload: Record<string, string> = {};
+  if (entry.email?.trim()) payload.email = entry.email.trim();
+  if (entry.phone?.trim()) payload.phone = entry.phone.trim();
+
+  await insertSubmission("workshop", payload, entry.submittedAt);
 };
 
 export const getWorkshopEntries = async (): Promise<WorkshopEntry[]> => {
   const rows = await getSubmissions("workshop");
 
   return rows.map(({ payload, submitted_at }) => ({
-    email: asString(payload?.email),
+    email: asString(payload?.email) || undefined,
+    phone: asString(payload?.phone) || undefined,
     submittedAt: submitted_at,
   }));
 };
