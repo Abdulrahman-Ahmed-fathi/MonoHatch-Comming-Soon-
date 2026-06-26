@@ -15,6 +15,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import logoUrl from "@/assets/logo.png";
 import { cn } from "@/lib/utils";
+import WorkshopSettingsPanel from "@/components/admin/WorkshopSettingsPanel";
+import AppDownloadSettingsPanel from "@/components/admin/AppDownloadSettingsPanel";
 
 function formatDate(iso: string, locale: string) {
   try {
@@ -169,8 +171,8 @@ export default function Dashboard() {
   const workshopRows = workshopEntries.map((entry, i) => [
     i + 1,
     "—",
-    entry.email,
-    "—",
+    entry.email || "—",
+    entry.phone || "—",
     formatDate(entry.submittedAt, locale),
   ]);
 
@@ -236,10 +238,29 @@ export default function Dashboard() {
             <TabsTrigger value="stay_tuned" className="data-[state=active]:bg-white data-[state=active]:text-french-rose">
               {t("dashboard.tabs.stayTuned")} ({stayTunedEntries.length})
             </TabsTrigger>
+            <TabsTrigger value="workshop_settings" className="data-[state=active]:bg-white data-[state=active]:text-french-rose">
+              {t("dashboard.tabs.workshopSettings")}
+            </TabsTrigger>
+            <TabsTrigger value="app_download" className="data-[state=active]:bg-white data-[state=active]:text-french-rose">
+              {t("dashboard.tabs.appDownload")}
+            </TabsTrigger>
           </TabsList>
 
           {isLoading ? (
-            <TableSkeleton />
+            <>
+              <TabsContent value="free_trial">
+                <TableSkeleton />
+              </TabsContent>
+              <TabsContent value="partner">
+                <TableSkeleton />
+              </TabsContent>
+              <TabsContent value="workshop">
+                <TableSkeleton />
+              </TabsContent>
+              <TabsContent value="stay_tuned">
+                <TableSkeleton />
+              </TabsContent>
+            </>
           ) : (
             <>
               <TabsContent value="free_trial" className="rounded-2xl border border-[#efe8e5] bg-white p-5 shadow-sm">
@@ -289,6 +310,13 @@ export default function Dashboard() {
               </TabsContent>
             </>
           )}
+
+          <TabsContent value="workshop_settings" className="rounded-2xl border border-[#efe8e5] bg-white p-5 shadow-sm">
+            <WorkshopSettingsPanel />
+          </TabsContent>
+          <TabsContent value="app_download" className="rounded-2xl border border-[#efe8e5] bg-white p-5 shadow-sm">
+            <AppDownloadSettingsPanel />
+          </TabsContent>
         </Tabs>
 
         {isLoading ? (

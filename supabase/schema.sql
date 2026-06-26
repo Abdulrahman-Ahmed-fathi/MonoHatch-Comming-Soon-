@@ -26,3 +26,25 @@ create policy "Public can read form submissions"
   for select
   to anon, authenticated
   using (true);
+
+create table if not exists public.site_settings (
+  key text primary key,
+  value jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default timezone('utc', now())
+);
+
+alter table public.site_settings enable row level security;
+
+grant select, insert, update on table public.site_settings to anon, authenticated;
+
+drop policy if exists "Public can read site settings" on public.site_settings;
+drop policy if exists "Public can insert site settings" on public.site_settings;
+drop policy if exists "Public can update site settings" on public.site_settings;
+drop policy if exists "Public can manage site settings" on public.site_settings;
+
+create policy "Public can manage site settings"
+  on public.site_settings
+  for all
+  to anon, authenticated
+  using (true)
+  with check (true);

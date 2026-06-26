@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { APK_DOWNLOAD_URL, APK_FILE_NAME } from "@/constants/appDownload";
+import {
+  DEFAULT_APP_DOWNLOAD_SETTINGS,
+  getAppDownloadSettings,
+  type AppDownloadSettings,
+} from "@/lib/siteSettings";
 import { cn } from "@/lib/utils";
 import LandingButton from "@/components/ui/button";
 
@@ -60,17 +65,27 @@ export default function DownloadAppButton({
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const [showNotice, setShowNotice] = useState(false);
+  const [downloadSettings, setDownloadSettings] = useState<AppDownloadSettings>({
+    downloadUrl: APK_DOWNLOAD_URL,
+    fileName: APK_FILE_NAME,
+  });
+
+  useEffect(() => {
+    void getAppDownloadSettings()
+      .then(setDownloadSettings)
+      .catch(() => setDownloadSettings(DEFAULT_APP_DOWNLOAD_SETTINGS));
+  }, []);
 
   const triggerDownload = () => {
     const link = document.createElement("a");
-    link.href = APK_DOWNLOAD_URL;
-    link.download = APK_FILE_NAME;
+    link.href = downloadSettings.downloadUrl;
+    link.download = downloadSettings.fileName;
     link.rel = "noopener noreferrer";
     link.target = "_blank";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    window.open(APK_DOWNLOAD_URL, "_blank", "noopener,noreferrer");
+    window.open(downloadSettings.downloadUrl, "_blank", "noopener,noreferrer");
     if (!hideInlineNotice) setShowNotice(true);
   };
 
