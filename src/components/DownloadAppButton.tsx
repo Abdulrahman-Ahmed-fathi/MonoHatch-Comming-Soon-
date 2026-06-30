@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import LandingButton from "@/components/ui/button";
 
-const REGISTER_URL = "http://localhost:8080/register";
+const REGISTER_URL = "/register";
 
 type DownloadAppButtonProps = {
   size?: "sm" | "md" | "lg";
