@@ -257,7 +257,7 @@ const ar = {
       emailPlaceholder: "you@example.com",
       phone: "رقم الهاتف",
       phonePlaceholder: "+20 1xx xxx xxxx",
-      submit: "متابعة",
+      submit: "متابعة إلى تنزيل التطبيق",
       submitting: "جاري الإرسال...",
       error: "تعذّر حفظ بياناتك الآن. يرجى المحاولة مرة أخرى.",
     },

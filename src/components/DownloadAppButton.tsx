@@ -11,6 +11,8 @@ import {
 import { cn } from "@/lib/utils";
 import LandingButton from "@/components/ui/button";
 
+const REGISTER_URL = "http://localhost:8080/register";
+
 type DownloadAppButtonProps = {
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -77,16 +79,11 @@ export default function DownloadAppButton({
   }, []);
 
   const triggerDownload = () => {
-    const link = document.createElement("a");
-    link.href = downloadSettings.downloadUrl;
-    link.download = downloadSettings.fileName;
-    link.rel = "noopener noreferrer";
-    link.target = "_blank";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.open(downloadSettings.downloadUrl, "_blank", "noopener,noreferrer");
-    if (!hideInlineNotice) setShowNotice(true);
+    // Redirect to registration page instead of downloading directly.
+    // The actual APK download (downloadSettings.downloadUrl /
+    // downloadSettings.fileName) should be triggered from the
+    // /register flow once the user has submitted their info.
+    window.location.href = REGISTER_URL;
   };
 
   return (
