@@ -257,7 +257,7 @@ const en = {
       emailPlaceholder: "you@example.com",
       phone: "Phone Number",
       phonePlaceholder: "+20 1xx xxx xxxx",
-      submit: "Continue",
+      submit: "Continue to download the app",
       submitting: "Submitting...",
       error: "We could not save your details right now. Please try again.",
     },
