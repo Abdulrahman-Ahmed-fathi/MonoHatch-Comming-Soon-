@@ -5,7 +5,8 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Rocket } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { saveFreeTrialEntry } from "@/lib/formStorage";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import DownloadAppButton, { ApkSafetyNotice } from "@/components/DownloadAppButton";
+import { ApkSafetyNotice } from "@/components/DownloadAppButton";
+import DownloadApkButton from "@/components/DownloadApkButton";
 import logoUrl from "@/assets/logo.png";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +31,7 @@ export default function Register() {
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [showDownloadNotice, setShowDownloadNotice] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -189,12 +191,14 @@ export default function Register() {
                 {t("register.phase2.subtitle")}
               </p>
               <div className="mt-8 flex flex-col items-center gap-4">
-                <DownloadAppButton
+                <DownloadApkButton
                   size="lg"
-                  className="w-full max-w-sm items-center"
-                  hideInlineNotice
+                  className="w-full max-w-sm justify-center"
+                  onDownloadStart={() => setShowDownloadNotice(true)}
                 />
-                <ApkSafetyNotice className="max-w-md text-start" />
+                {showDownloadNotice ? (
+                  <ApkSafetyNotice className="max-w-md text-start" />
+                ) : null}
               </div>
             </motion.div>
           )}

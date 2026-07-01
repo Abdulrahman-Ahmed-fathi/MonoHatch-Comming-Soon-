@@ -277,6 +277,7 @@ const en = {
     error: "Invalid username or password",
   },
   dashboard: {
+    exportExcel: "Export to Excel",
     title: "Admin Dashboard",
     subtitle:
       "Review Supabase form entries and manage site settings for the workshop section and app download link.",
