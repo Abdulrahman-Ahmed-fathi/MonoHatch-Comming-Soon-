@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { FileDown } from "lucide-react";
 import {
   getFreeTrialEntries,
   getPartnerEntries,
@@ -11,6 +12,7 @@ import {
   WorkshopEntry,
   StayTunedEntry,
 } from "@/lib/formStorage";
+import { exportToExcel } from "@/lib/exportExcel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import logoUrl from "@/assets/logo.png";
@@ -184,6 +186,22 @@ export default function Dashboard() {
     formatDate(entry.submittedAt, locale),
   ]);
 
+  const exportFreeTrialToExcel = () => {
+    const rows = freeTrialEntries.map((entry, i) => ({
+      [col.index]: i + 1,
+      [col.name]: entry.fullName,
+      [col.email]: entry.email,
+      [col.phone]: entry.phone,
+      [col.submittedAt]: formatDate(entry.submittedAt, locale),
+    }));
+
+    exportToExcel(
+      rows,
+      `free-trial-entries-${new Date().toISOString().slice(0, 10)}.xlsx`,
+      "Free Trial"
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#fdf7f9]">
       <header className="border-b border-[#efe8e5] bg-white shadow-sm">
@@ -264,6 +282,17 @@ export default function Dashboard() {
           ) : (
             <>
               <TabsContent value="free_trial" className="rounded-2xl border border-[#efe8e5] bg-white p-5 shadow-sm">
+                <div className="mb-4 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={exportFreeTrialToExcel}
+                    disabled={freeTrialEntries.length === 0}
+                    className="inline-flex items-center gap-2 rounded-lg border border-french-rose/40 bg-white px-4 py-2 text-sm font-medium text-french-rose transition hover:bg-french-rose/5 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <FileDown className="h-4 w-4" aria-hidden />
+                    {t("dashboard.exportExcel")}
+                  </button>
+                </div>
                 <DataTable
                   headers={[col.index, col.name, col.email, col.phone, col.submittedAt]}
                   rows={freeTrialRows}

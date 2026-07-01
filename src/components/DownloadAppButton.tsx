@@ -1,13 +1,6 @@
-import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { APK_DOWNLOAD_URL, APK_FILE_NAME } from "@/constants/appDownload";
-import {
-  DEFAULT_APP_DOWNLOAD_SETTINGS,
-  getAppDownloadSettings,
-  type AppDownloadSettings,
-} from "@/lib/siteSettings";
 import { cn } from "@/lib/utils";
 import LandingButton from "@/components/ui/button";
 
@@ -18,7 +11,6 @@ type DownloadAppButtonProps = {
   className?: string;
   showIcon?: boolean;
   variant?: "primary" | "secondary" | "ghost" | "white";
-  hideInlineNotice?: boolean;
 };
 
 export function ApkSafetyNotice({
@@ -57,32 +49,22 @@ export function ApkSafetyNotice({
   );
 }
 
+/**
+ * Homepage "Download" buttons. These do NOT download the app directly —
+ * they send the user to /register first. The actual APK download happens
+ * via <DownloadApkButton /> on the Register success screen, after the
+ * user submits their info.
+ */
 export default function DownloadAppButton({
   size = "md",
   className,
   showIcon = true,
   variant = "primary",
-  hideInlineNotice = false,
 }: DownloadAppButtonProps) {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
-  const [showNotice, setShowNotice] = useState(false);
-  const [downloadSettings, setDownloadSettings] = useState<AppDownloadSettings>({
-    downloadUrl: APK_DOWNLOAD_URL,
-    fileName: APK_FILE_NAME,
-  });
 
-  useEffect(() => {
-    void getAppDownloadSettings()
-      .then(setDownloadSettings)
-      .catch(() => setDownloadSettings(DEFAULT_APP_DOWNLOAD_SETTINGS));
-  }, []);
-
-  const triggerDownload = () => {
-    // Redirect to registration page instead of downloading directly.
-    // The actual APK download (downloadSettings.downloadUrl /
-    // downloadSettings.fileName) should be triggered from the
-    // /register flow once the user has submitted their info.
+  const goToRegister = () => {
     window.location.href = REGISTER_URL;
   };
 
@@ -97,7 +79,7 @@ export default function DownloadAppButton({
           type="button"
           variant={variant}
           size={size}
-          onClick={triggerDownload}
+          onClick={goToRegister}
           ariaLabel={t("download.button")}
           className="gap-2"
         >
@@ -105,7 +87,6 @@ export default function DownloadAppButton({
           {t("download.button")}
         </LandingButton>
       </motion.div>
-      {showNotice ? <ApkSafetyNotice onDismiss={() => setShowNotice(false)} /> : null}
     </div>
   );
 }
